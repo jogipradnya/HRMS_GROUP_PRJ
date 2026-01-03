@@ -281,100 +281,102 @@ const FeedPage1 = ({ onNavigateBack }) => {
                         </div>
                     </div>
 
-                   {/* Right Sidebar */}
-<div className="space-y-6">
+                    {/* Right Sidebar */}
+                    <div className="space-y-6">
 
-    {/* Your Points */}
-    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6">
-        <h3 className="text-lg font-bold text-[#266ECD] dark:text-blue-400 mb-4">
-            Your Points
-        </h3>
+                        {/* Your Points */}
+                        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6">
+                            <h3 className="text-lg font-bold text-[#266ECD] dark:text-blue-400 mb-4">
+                                Your Points
+                            </h3>
 
-        <div className="flex items-center gap-3 mb-4">
-            <div className="text-5xl font-bold text-[#266ECD]">
-                {userPoints?.toLocaleString() || 0}
-            </div>
-        </div>
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="text-5xl font-bold text-[#266ECD]">
+                                    {userPoints?.toLocaleString() || 0}
+                                </div>
+                            </div>
 
-        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
-            Reward points balance
-        </p>
+                            <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+                                Reward points balance
+                            </p>
 
-        <Link
-            to="/redemption"
-            className="block text-center bg-[#266ECD] text-white px-6 py-2.5 rounded-xl font-bold"
-        >
-            View Redemption Center
-        </Link>
-    </div>
+                            <Link
+                                to="/redemption"
+                                className="block text-center bg-[#266ECD] text-white px-6 py-2.5 rounded-xl font-bold"
+                            >
+                                View Redemption Center
+                            </Link>
+                        </div>
 
-    {/* Upcoming Training */}
-    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6">
-        <h3 className="text-lg font-bold text-[#266ECD] dark:text-blue-400 mb-4">
-            Don't Miss Out! Upcoming Training Session
-        </h3>
+                        {/* Upcoming Training */}
+                        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6">
+                            <h3 className="text-lg font-bold text-[#266ECD] dark:text-blue-400 mb-4">
+                                Don't Miss Out! Upcoming Training Session
+                            </h3>
 
-        <div className="space-y-2 mb-5">
-            <p className="text-sm text-gray-700 dark:text-gray-300">
-                <span className="font-bold">Date:</span> 29 Oct
-            </p>
-            <p className="text-sm text-gray-700 dark:text-gray-300">
-                <span className="font-bold">Time:</span> 9:00 AM - 12:00 PM
-            </p>
-        </div>
-
-        <button className="w-full bg-[#266ECD] text-white px-6 py-2.5 rounded-xl font-bold">
-            Register
-        </button>
-    </div>
-
-    {/* Upcoming Events */}
-    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6">
-        <h3 className="font-bold text-gray-900 dark:text-white mb-4">
-            Upcoming Events
-        </h3>
-
-        <div className="space-y-4">
-            {eventsLoading ? (
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Loading events...
-                </p>
-            ) : events.filter(e => getEventCategory(e.event_date) === 'upcoming').length === 0 ? (
-                <p className="text-sm text-gray-500 dark:text-gray-400">
-                    No upcoming events
-                </p>
-            ) : (
-                events
-                    .filter(e => getEventCategory(e.event_date) === 'upcoming')
-                    .slice(0, 3)
-                    .map(ev => (
-                        <div className="flex justify-between items-start" key={ev.id}>
-                            <div>
-                                <p className="text-sm font-semibold text-gray-900 dark:text-gray-200">
-                                    {ev.title}
+                            <div className="space-y-2 mb-5">
+                                <p className="text-sm text-gray-700 dark:text-gray-300">
+                                    <span className="font-bold">Date:</span> 29 Oct
                                 </p>
-                                <p className="text-xs text-gray-500 dark:text-gray-400">
-                                    {ev.start_time || ''}
-                                    {ev.end_time ? ` - ${ev.end_time}` : ''}
+                                <p className="text-sm text-gray-700 dark:text-gray-300">
+                                    <span className="font-bold">Time:</span> 9:00 AM - 12:00 PM
                                 </p>
                             </div>
-                            <span className="text-sm font-bold text-gray-900 dark:text-white">
-                                {`${ev.attendee_count ?? 0} attending`}
-                            </span>
+
+                            <button className="w-full bg-[#266ECD] text-white px-6 py-2.5 rounded-xl font-bold">
+                                Register
+                            </button>
                         </div>
-                    ))
-            )}
 
-            <Link
-                to="/event"
-                className="text-[#266ECD] text-sm font-semibold hover:underline"
-            >
-                More...
-            </Link>
-        </div>
-    </div>
+                        {/* Upcoming Events */}
+                        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6">
+                            <h3 className="font-bold text-gray-900 dark:text-white mb-4">
+                                Upcoming Events
+                            </h3>
 
-</div>
+                            <div className="space-y-4">
+                                {eventsLoading ? (
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                                        Loading events...
+                                    </p>
+                                ) : events.filter(e => getEventCategory(e.event_date) === 'upcoming').length === 0 ? (
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                                        No upcoming events
+                                    </p>
+                                ) : (
+                                    events
+                                        .filter(e => getEventCategory(e.event_date) === 'upcoming')
+                                        .slice(0, 3)
+                                        .map(ev => (
+                                            <div className="flex justify-between items-start" key={ev.id}>
+                                                <div>
+                                                    <p className="text-sm font-semibold text-gray-900 dark:text-gray-200">
+                                                        {ev.title}
+                                                    </p>
+                                                    <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                        {ev.start_time || ''}
+                                                        {ev.end_time ? ` - ${ev.end_time}` : ''}
+                                                    </p>
+                                                </div>
+                                                <span className="text-sm font-bold text-gray-900 dark:text-white">
+                                                    {`${ev.attendee_count ?? 0} attending`}
+                                                </span>
+                                            </div>
+                                        ))
+                                )}
+
+                                <Link
+                                    to="/event"
+                                    className="text-[#266ECD] text-sm font-semibold hover:underline"
+                                >
+                                    More...
+                                </Link>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
             {/* Give Points Modal */}
             {showGivePointsModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
