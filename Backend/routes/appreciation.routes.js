@@ -1,5 +1,5 @@
 import express from "express";
-import { authMiddleware } from "../middleware/auth.middleware.js";
+import { authenticate } from "../middleware/auth.middleware.js";
 import {
     createAppreciationController,
     getAllAppreciationsController,
@@ -16,17 +16,17 @@ const router = express.Router();
 
 // Appreciation routes
 router.get("/leaderboard", getLeaderboardController);
-router.post("/", authMiddleware, createAppreciationController);
+router.post("/", authenticate, createAppreciationController);
 router.get("/", getAllAppreciationsController);
 router.get("/:id", getAppreciationByIdController);
-router.delete("/:id", authMiddleware, deleteAppreciationController);
+router.delete("/:id", authenticate, deleteAppreciationController);
 
 // Like routes
-router.post("/:id/like", authMiddleware, toggleLikeController);
+router.post("/:id/like", authenticate, toggleLikeController);
 
 // Comment routes
-router.post("/:id/comments", authMiddleware, addCommentController);
+router.post("/:id/comments", authenticate, addCommentController);
 router.get("/:id/comments", getCommentsController);
-router.delete("/:id/comments/:commentId", authMiddleware, deleteCommentController);
+router.delete("/:id/comments/:commentId", authenticate, deleteCommentController);
 
 export default router;

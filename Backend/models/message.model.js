@@ -10,7 +10,7 @@ export const createMessagesTable = async () => {
         status VARCHAR(20) DEFAULT 'sent',
         is_edited BOOLEAN DEFAULT FALSE,
         is_deleted BOOLEAN DEFAULT FALSE,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
     );
     `;
     try {

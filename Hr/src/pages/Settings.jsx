@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-  Bell, Moon, Star, Link as LinkIcon, 
-  Shield, FileText, Cookie, 
+import {
+  Bell, Moon, Star, Link as LinkIcon,
+  Shield, FileText, Cookie,
   Phone, MessageSquare, LogOut,
   ChevronRight
 } from 'lucide-react';
@@ -28,7 +28,7 @@ const SettingsPage = () => {
       document.documentElement.classList.remove("dark");
       localStorage.setItem("theme", "light");
     }
-    
+
     // Dispatch a custom event so other tabs/components know immediately
     window.dispatchEvent(new Event("storage"));
   };
@@ -67,9 +67,8 @@ const SettingsPage = () => {
         {settingsItems.map((item, index) => (
           <div
             key={index}
-            className={`flex items-center justify-between px-6 py-4 ${
-              index !== settingsItems.length - 1 ? 'border-b border-gray-100' : ''
-            } ${item.isLogout ? 'hover:bg-red-50 cursor-pointer' : 'hover:bg-gray-50 cursor-pointer'}`}
+            className={`flex items-center justify-between px-6 py-4 ${index !== settingsItems.length - 1 ? 'border-b border-gray-100' : ''
+              } ${item.isLogout ? 'hover:bg-red-50 cursor-pointer' : 'hover:bg-gray-50 cursor-pointer'}`}
             onClick={async (e) => {
               if (item.hasToggle || item.onToggle) return;
               if (item.path) return navigate(item.path);
@@ -86,7 +85,7 @@ const SettingsPage = () => {
                 {item.label}
               </span>
             </div>
-            
+
             <div className="flex items-center">
               {item.hasToggle ? (
                 <div
