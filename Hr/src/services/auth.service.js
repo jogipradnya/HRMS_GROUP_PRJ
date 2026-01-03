@@ -1,6 +1,7 @@
 const API_URL = "http://localhost:3000/api/users";
 
 export const login = async (email, password) => {
+    // eslint-disable-next-line no-useless-catch
     try {
         const response = await fetch(`${API_URL}/login`, {
             method: "POST",

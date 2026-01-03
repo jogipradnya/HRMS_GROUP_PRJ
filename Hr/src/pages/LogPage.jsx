@@ -67,8 +67,10 @@ export default function LogPage() {
   }, []);
 
   return (
-    <div className="relative min-h-screen w-screen flex items-center justify-center font-[Poppins] px-4 md:px-12 lg:px-24 py-12 bg-gray-50">
-      <div className="relative z-10 w-full max-w-5xl bg-white rounded-lg shadow-xl overflow-hidden min-h-[75vh] flex flex-col md:flex-row">
+    <div className="relative min-h-screen w-screen flex items-center justify-center font-[Poppins] px-4 md:px-12 lg:px-24 py-12 bg-gray-50 dark:bg-[#020839]">
+
+      <div className="relative z-10 w-full max-w-5xl bg-white dark:bg-[#2C50AB] rounded-lg shadow-xl overflow-hidden min-h-[75vh] flex flex-col md:flex-row">
+
 
         {/* WATERMARK inside card — now moved up */}
         <img
@@ -92,7 +94,7 @@ export default function LogPage() {
 
         {/* Left side - Login form */}
         <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
-          <h3 className="text-3xl md:text-4xl font-bold mb-6 text-black">
+          <h3 className="text-3xl md:text-4xl font-bold mb-6 text-black dark:text-white">
             Login in
           </h3>
 
@@ -121,17 +123,17 @@ export default function LogPage() {
 
             <div className="flex items-center my-4">
               <div className="grow h-px bg-gray-300" />
-              <span className="mx-4 text-gray-500">or</span>
+              <span className="mx-4 text-gray-500 dark:text-[#E5E7EB]">or</span>
               <div className="grow h-px bg-gray-300" />
             </div>
 
             {/* FORM */}
             <form id="loginForm" className="flex flex-col gap-3">
-              <label className="text-xs text-gray-700 font-bold">Email Address</label>
+              <label className="text-xs text-gray-700  dark:text-[#E5E7EB] font-bold">Email Address</label>
               <input
                 type="email"
                 id="Iemail"
-                className="w-full border rounded-lg px-3 py-2 text-sm bg-white"
+                className="w-full border rounded-lg px-3 py-2 text-sm bg-white dark:bg-[#020839] dark:text-white dark:border-[#88AAFF]"
                 autoComplete="email"
               />
               <p id="IemailError" className="hidden text-red-500 text-xs mt-1">
