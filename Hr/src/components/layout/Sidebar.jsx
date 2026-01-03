@@ -95,7 +95,7 @@ function Sidebar() {
   }, []);
 
   return (
-    <aside className="w-64 h-screen fixed left-0 top-0 bg-[#020839] text-white p-6">
+    <aside className="w-64 h-screen fixed left-0 top-0 bg-[#020839] dark:bg-[#2C50AB] text-white dark:text-[#AACCFF] p-6">
 
       {/* LOGO */}
       <h1 className="text-3xl font-bold mb-8 tracking-wide">HRMS</h1>
@@ -130,7 +130,7 @@ function Sidebar() {
                 to={item.path}
                 className={`block px-4 py-2 rounded-lg font-medium ${isActive
                   ? "bg-white text-[#020839]"
-                  : "text-white hover:bg-[#1e276d]"
+                  : "text-white dark:text-[#AACCFF] hover:bg-[#1e276d] dark:hover:bg-[#88AAFF] dark:hover:text-[#020839]"
                   }`}
               >
                 {item.name}
@@ -145,7 +145,7 @@ function Sidebar() {
             to={tasksLink}
             className={`block px-4 py-2 rounded-lg font-medium ${tasksActive
               ? "bg-white text-[#020839]"
-              : "text-white hover:bg-[#1e276d]"
+              : "text-white dark:text-[#AACCFF] hover:bg-[#1e276d] dark:hover:bg-[#88AAFF] dark:hover:text-[#020839]"
               }`}
           >
             <div className="flex items-center justify-between">

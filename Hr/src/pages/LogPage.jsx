@@ -68,6 +68,23 @@ export default function LogPage() {
 
   return (
     <div className="relative min-h-screen w-screen flex items-center justify-center font-[Poppins] px-4 md:px-12 lg:px-24 py-12 bg-gray-50 dark:bg-[#020839]">
+      <button
+        onClick={() => {
+          document.documentElement.classList.toggle("dark");
+        }}
+        className="
+    absolute top-4 right-4
+    px-4 py-2
+    rounded-full
+    bg-white text-black
+    dark:bg-black dark:text-white
+    border border-gray-300 dark:border-gray-500
+    shadow-md
+    z-50
+  "
+      >
+        toggle theme
+      </button>
 
       <div className="relative z-10 w-full max-w-5xl bg-white dark:bg-[#2C50AB] rounded-lg shadow-xl overflow-hidden min-h-[75vh] flex flex-col md:flex-row">
 

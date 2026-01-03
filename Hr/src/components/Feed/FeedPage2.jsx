@@ -160,7 +160,7 @@ const FeedPage2 = ({ onNavigateToPage2, onNavigateToPage3, onNavigateToCreateFor
             try {
                 await deleteAppreciation(appreciationId);
                 setAppreciations(prev => prev.filter(a => a.id !== appreciationId));
-                try { window.dispatchEvent(new CustomEvent('activity:updated')); } catch (e) {}
+                try { window.dispatchEvent(new CustomEvent('activity:updated')); } catch (e) { }
             } catch (err) {
                 alert('Failed to delete appreciation. You can only delete your own posts.');
                 console.error(err);
@@ -235,13 +235,13 @@ const FeedPage2 = ({ onNavigateToPage2, onNavigateToPage3, onNavigateToCreateFor
     };
 
     return (
-        <div className="p-4 sm:p-8">
+        <div className="p-4 sm:p-8 dark:bg-[#0C1014] min-h-screen">
             <div className="max-w-7xl mx-auto">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
                     <div>
-                        <h1 className="text-xl font-bold text-[#266ECD]">Feed</h1>
-                        <p className="text-sm text-gray-500 mt-1">Stay Connected and Informed: Your Hub for Updates and Interaction</p>
+                        <h1 className="text-xl font-bold text-[#266ECD] dark:text-[#4dabf7]">Feed</h1>
+                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Stay Connected and Informed: Your Hub for Updates and Interaction</p>
                     </div>
                     <div className="flex items-center gap-3">
                         {(
@@ -270,16 +270,21 @@ const FeedPage2 = ({ onNavigateToPage2, onNavigateToPage3, onNavigateToCreateFor
                     {/* Main Content */}
                     <div className="lg:col-span-2 space-y-6">
                         {/* Tabs */}
-                        <div className="flex gap-8 border-b-2 border-gray-200">
-                            <button
-                                onClick={onNavigateToPage3}
-                                className="pb-3 text-gray-900 font-semibold border-b-4 border-[#266ECD] -mb-0.5"
-                            >
-                                Employee of the Month
-                            </button>
-                            <button className="pb-3 text-gray-500 hover:text-gray-900 font-medium">
-                                <Link to="/promotion">Promotions</Link>
-                            </button>
+                        <div className="flex items-center justify-between">
+                            <div className="flex gap-8">
+                                <button
+                                    onClick={onNavigateToPage3}
+                                    className="pb-3 text-gray-900 dark:text-white font-semibold border-b-4 border-[#266ECD] -mb-0.5"
+                                >
+                                    Employee of the Month
+                                </button>
+                                <button className="pb-3 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white font-medium">
+                                    <Link to="/promotion">Promotions</Link>
+                                </button>
+                            </div>
+                            <div>
+                                <Link to="/appreciation/new" className="ml-4 inline-block bg-[#266ECD] text-white px-4 py-2 rounded-lg font-medium hover:bg-opacity-90">New Appreciation</Link>
+                            </div>
                         </div>
 
                         {/* Loading State */}
@@ -299,8 +304,8 @@ const FeedPage2 = ({ onNavigateToPage2, onNavigateToPage3, onNavigateToCreateFor
 
                         {/* Appreciations List */}
                         {!loading && !error && appreciations.length === 0 && (
-                            <div className="bg-white rounded-2xl shadow-md p-12 text-center">
-                                <p className="text-gray-500 text-lg">No appreciations yet. Be the first to create one!</p>
+                            <div className="bg-white dark:bg-[#1F2429] rounded-2xl shadow-md p-12 text-center">
+                                <p className="text-gray-500 dark:text-gray-400 text-lg">No appreciations yet. Be the first to create one!</p>
                                 {isAdmin && (
                                     <button
                                         onClick={onNavigateToCreateForm}
@@ -313,7 +318,7 @@ const FeedPage2 = ({ onNavigateToPage2, onNavigateToPage3, onNavigateToCreateFor
                         )}
 
                         {!loading && appreciations.map((appreciation) => (
-                            <div key={appreciation.id} className="bg-white rounded-2xl shadow-md overflow-hidden">
+                            <div key={appreciation.id} className="bg-white dark:bg-[#1F2429] rounded-2xl shadow-md overflow-hidden">
                                 <div className="p-6">
                                     <div className="flex items-start justify-between mb-4">
                                         <div className="flex items-center gap-3">
@@ -321,8 +326,8 @@ const FeedPage2 = ({ onNavigateToPage2, onNavigateToPage3, onNavigateToCreateFor
                                                 {appreciation.sender_name?.charAt(0) || 'U'}
                                             </div>
                                             <div>
-                                                <p className="font-bold text-gray-900">{appreciation.sender_name}</p>
-                                                <p className="text-sm text-gray-500">{appreciation.sender_email}</p>
+                                                <p className="font-bold text-gray-900 dark:text-white">{appreciation.sender_name}</p>
+                                                <p className="text-sm text-gray-500 dark:text-gray-400">{appreciation.sender_email}</p>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-3">
@@ -341,26 +346,26 @@ const FeedPage2 = ({ onNavigateToPage2, onNavigateToPage3, onNavigateToCreateFor
                                             {appreciation.recipient_name?.charAt(0) || 'U'}
                                         </div>
                                         <div>
-                                            <p className="font-bold text-gray-900">{appreciation.recipient_name}</p>
-                                            <p className="text-sm text-gray-500">{appreciation.recipient_email}</p>
+                                            <p className="font-bold text-gray-900 dark:text-white">{appreciation.recipient_name}</p>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400">{appreciation.recipient_email}</p>
                                         </div>
-                                        <div className="ml-auto flex items-center gap-3 text-sm text-gray-500">
+                                        <div className="ml-auto flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400">
                                             <span>{formatDate(appreciation.created_at)}</span>
                                             <span>{formatTime(appreciation.created_at)}</span>
                                         </div>
                                     </div>
 
-                                    <div className="bg-white border border-gray-200 rounded-2xl p-6 mb-5 shadow-md">
+                                    <div className="bg-white dark:bg-[#1F2429] border border-gray-200 dark:border-[#333] rounded-2xl p-6 mb-5 shadow-md">
                                         <div className="flex items-start gap-3 mb-3">
                                             <span className="text-3xl">{appreciation.emoji}</span>
-                                            <h3 className="text-xl font-bold text-teal-900">{appreciation.title}</h3>
+                                            <h3 className="text-xl font-bold text-teal-900 dark:text-teal-400">{appreciation.title}</h3>
                                         </div>
                                         <div className="mb-4">
                                             <span className="bg-teal-200 text-teal-900 px-4 py-1.5 rounded-full text-sm font-bold">
                                                 {appreciation.category}
                                             </span>
                                         </div>
-                                        <p className="text-gray-700 text-sm leading-relaxed">
+                                        <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
                                             {appreciation.message}
                                         </p>
                                     </div>
@@ -369,8 +374,8 @@ const FeedPage2 = ({ onNavigateToPage2, onNavigateToPage3, onNavigateToCreateFor
                                         <button
                                             onClick={() => handleLike(appreciation.id)}
                                             className={`flex items-center gap-2 ${appreciation.user_liked
-                                                ? 'text-purple-700'
-                                                : 'text-gray-500 hover:text-purple-700'
+                                                ? 'text-purple-700 dark:text-purple-400'
+                                                : 'text-gray-500 dark:text-gray-400 hover:text-purple-700 dark:hover:text-purple-400'
                                                 }`}
                                         >
                                             <svg className="w-6 h-6 fill-current" viewBox="0 0 20 20">
@@ -385,7 +390,7 @@ const FeedPage2 = ({ onNavigateToPage2, onNavigateToPage3, onNavigateToCreateFor
                                         </div>
                                         <button
                                             onClick={() => toggleCommentsView(appreciation.id)}
-                                            className="flex items-center gap-2 text-gray-500 hover:text-gray-700"
+                                            className="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
                                         >
                                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -408,13 +413,13 @@ const FeedPage2 = ({ onNavigateToPage2, onNavigateToPage3, onNavigateToCreateFor
                                                 );
                                             }
                                             return null;
-                                        })()} 
+                                        })()}
                                     </div>
 
                                     {/* Comments Section */}
                                     {showComments[appreciation.id] && (
-                                        <div className="mt-6 pt-6 border-t border-gray-200">
-                                            <h4 className="font-bold text-gray-900 mb-4">Comments</h4>
+                                        <div className="mt-6 pt-6 border-t border-gray-200 dark:border-[#333]">
+                                            <h4 className="font-bold text-gray-900 dark:text-white mb-4">Comments</h4>
 
                                             {/* Comment Input */}
                                             <div className="flex gap-2 mb-4">
@@ -428,7 +433,7 @@ const FeedPage2 = ({ onNavigateToPage2, onNavigateToPage3, onNavigateToCreateFor
                                                         }
                                                     }}
                                                     placeholder="Add a comment..."
-                                                    className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#266ECD] focus:border-transparent outline-none"
+                                                    className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-[#0C1014] text-gray-900 dark:text-white rounded-lg focus:ring-2 focus:ring-[#266ECD] focus:border-transparent outline-none"
                                                 />
                                                 <button
                                                     onClick={() => handleAddComment(appreciation.id)}
@@ -441,12 +446,12 @@ const FeedPage2 = ({ onNavigateToPage2, onNavigateToPage3, onNavigateToCreateFor
                                             {/* Comments List */}
                                             <div className="space-y-3">
                                                 {comments[appreciation.id]?.map((comment) => (
-                                                    <div key={comment.id} className="bg-gray-50 rounded-lg p-3">
+                                                    <div key={comment.id} className="bg-gray-50 dark:bg-[#0C1014] rounded-lg p-3 border border-gray-100 dark:border-gray-700">
                                                         <div className="flex items-start justify-between">
                                                             <div>
-                                                                <p className="font-semibold text-sm text-gray-900">{comment.user_name}</p>
-                                                                <p className="text-sm text-gray-700 mt-1">{comment.comment}</p>
-                                                                <p className="text-xs text-gray-500 mt-1">
+                                                                <p className="font-semibold text-sm text-gray-900 dark:text-white">{comment.user_name}</p>
+                                                                <p className="text-sm text-gray-700 dark:text-gray-300 mt-1">{comment.comment}</p>
+                                                                <p className="text-xs text-gray-500 dark:text-gray-500 mt-1">
                                                                     {formatDate(comment.created_at)} at {formatTime(comment.created_at)}
                                                                 </p>
                                                             </div>
@@ -454,10 +459,11 @@ const FeedPage2 = ({ onNavigateToPage2, onNavigateToPage3, onNavigateToCreateFor
                                                     </div>
                                                 ))}
                                                 {(!comments[appreciation.id] || comments[appreciation.id].length === 0) && (
-                                                    <p className="text-sm text-gray-500 text-center py-4">No comments yet. Be the first to comment!</p>
+                                                    <p className="text-sm text-gray-300 text-center py-4">No comments yet. Be the first to comment!</p>
                                                 )}
                                             </div>
                                         </div>
+
                                     )}
                                 </div>
                             </div>
@@ -467,17 +473,17 @@ const FeedPage2 = ({ onNavigateToPage2, onNavigateToPage3, onNavigateToCreateFor
                     {/* Right Sidebar */}
                     <div className="space-y-6">
                         {/* New Point Alert */}
-                        <div className="bg-white rounded-2xl shadow-md p-6">
-                            <h3 className="text-lg font-bold text-[#266ECD] mb-4">New Point Alert!</h3>
+                        <div className="bg-white dark:bg-[#1F2429] rounded-2xl shadow-md p-6 border border-gray-100 dark:border-[#1F2429]">
+                            <h3 className="text-lg font-bold text-[#266ECD] dark:text-[#4dabf7] mb-4">New Point Alert!</h3>
                             <div className="flex items-center gap-3 mb-4">
-                                <div className="text-5xl font-bold text-[#266ECD]">{userPoints?.toLocaleString() || 0}</div>
+                                <div className="text-5xl font-bold text-[#266ECD] dark:text-[#4dabf7]">{userPoints?.toLocaleString() || 0}</div>
                                 <div className="w-10 h-10 rounded-full bg-[#266ECD] flex items-center justify-center">
                                     <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                                     </svg>
                                 </div>
                             </div>
-                            <p className="text-sm text-gray-600 mb-4">Reward points balance</p>
+                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">Reward points balance</p>
                             <button
                                 onClick={onNavigateToPage2}
                                 className="w-full bg-[#266ECD] text-white px-6 py-2.5 rounded-xl font-bold hover:bg-opacity-90 transition-all shadow-lg"
@@ -487,8 +493,8 @@ const FeedPage2 = ({ onNavigateToPage2, onNavigateToPage3, onNavigateToCreateFor
                         </div>
 
                         {/* Don't Miss Out! Upcoming Training Session */}
-                        <div className="bg-white rounded-2xl shadow-md p-6">
-                            <h3 className="text-lg font-bold text-[#266ECD] mb-4">
+                        <div className="bg-white dark:bg-[#1F2429] rounded-2xl shadow-md p-6 border border-gray-100 dark:border-[#1F2429]">
+                            <h3 className="text-lg font-bold text-[#266ECD] dark:text-[#4dabf7] mb-4">
                                 Don't Miss Out! Upcoming Training Session
                             </h3>
 
@@ -496,14 +502,14 @@ const FeedPage2 = ({ onNavigateToPage2, onNavigateToPage3, onNavigateToCreateFor
                             {meetings.length > 0 ? (
                                 <div className="space-y-2 mb-5">
                                     {/* We only render meetings[0] -> The single nearest meeting */}
-                                    <p className="text-sm font-semibold text-gray-900">
+                                    <p className="text-sm font-semibold text-gray-900 dark:text-white">
                                         {meetings[0].title}
                                     </p>
-                                    <p className="text-sm text-gray-700">
+                                    <p className="text-sm text-gray-700 dark:text-gray-300">
                                         <span className="font-bold">Date:</span>{" "}
                                         {meetings[0].meeting_date ? new Date(meetings[0].meeting_date).toLocaleDateString() : 'TBA'}
                                     </p>
-                                    <p className="text-sm text-gray-700">
+                                    <p className="text-sm text-gray-700 dark:text-gray-300">
                                         <span className="font-bold">Time:</span>{" "}
                                         {meetings[0].start_time} - {meetings[0].end_time}
                                     </p>
@@ -518,9 +524,9 @@ const FeedPage2 = ({ onNavigateToPage2, onNavigateToPage3, onNavigateToCreateFor
                         </div>
 
                         {/* Upcoming Events (dynamic) */}
-                        <div className="bg-white rounded-2xl shadow-md p-6">
+                        <div className="bg-white dark:bg-[#1F2429] rounded-2xl shadow-md p-6 border border-gray-100 dark:border-[#1F2429]">
                             <div className="flex items-center justify-between mb-4">
-                                <h3 className="font-bold text-gray-900 flex items-center gap-2">
+                                <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
                                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                                         <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
                                     </svg>
@@ -529,31 +535,31 @@ const FeedPage2 = ({ onNavigateToPage2, onNavigateToPage3, onNavigateToCreateFor
                             </div>
                             <div className="space-y-4">
                                 {eventsLoading ? (
-                                    <p className="text-sm text-gray-500">Loading events...</p>
-                                ) : events.filter(e => new Date(e.event_date) >= new Date().setHours(0,0,0)).length === 0 ? (
-                                    <p className="text-sm text-gray-500">No upcoming events</p>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">Loading events...</p>
+                                ) : events.filter(e => new Date(e.event_date) >= new Date().setHours(0, 0, 0)).length === 0 ? (
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">No upcoming events</p>
                                 ) : (
                                     events
-                                        .filter(e => new Date(e.event_date) >= new Date().setHours(0,0,0))
-                                        .sort((a,b) => new Date(a.event_date) - new Date(b.event_date))
-                                        .slice(0,4)
+                                        .filter(e => new Date(e.event_date) >= new Date().setHours(0, 0, 0))
+                                        .sort((a, b) => new Date(a.event_date) - new Date(b.event_date))
+                                        .slice(0, 4)
                                         .map(ev => (
                                             <div key={ev.id} className="flex justify-between items-start">
                                                 <div>
-                                                    <p className="text-sm font-semibold text-gray-900">{ev.title}</p>
-                                                    <p className="text-xs text-gray-500">{ev.start_time || ''}{ev.end_time ? ` - ${ev.end_time}` : ''}</p>
+                                                    <p className="text-sm font-semibold text-gray-900 dark:text-white">{ev.title}</p>
+                                                    <p className="text-xs text-gray-500 dark:text-gray-400">{ev.start_time || ''}{ev.end_time ? ` - ${ev.end_time}` : ''}</p>
                                                 </div>
-                                                <span className="text-sm font-bold text-gray-900">{`${ev.attendee_count ?? 0} attending`}</span>
+                                                <span className="text-sm font-bold text-gray-900 dark:text-white">{`${ev.attendee_count ?? 0} attending`}</span>
                                             </div>
                                         ))
                                 )}
-                                <Link to="/event" className="text-[#266ECD] text-sm font-semibold hover:underline">More...</Link>
+                                <Link to="/event" className="text-[#266ECD] dark:text-[#4dabf7] text-sm font-semibold hover:underline">More...</Link>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

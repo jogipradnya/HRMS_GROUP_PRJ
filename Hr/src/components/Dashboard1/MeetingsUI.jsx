@@ -9,7 +9,7 @@ export default function MeetingsUI() {
   const [loading, setLoading] = useState(true);
   const [selectedMeeting, setSelectedMeeting] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
-
+  
   // 1. State tracks if dark mode is active
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -18,15 +18,15 @@ export default function MeetingsUI() {
     const userStr = localStorage.getItem("user");
     if (userStr) {
       const user = JSON.parse(userStr);
-      setIsAdmin(user.role === 'Admin');
+      setIsAdmin(user.role==='Admin');
     }
 
     fetchMeetings();
 
     // 2. THE "LISTENER" (Optimized)
     const checkTheme = () => {
-      const isDark =
-        localStorage.getItem("theme") === "dark" ||
+      const isDark = 
+        localStorage.getItem("theme") === "dark" || 
         document.documentElement.classList.contains("dark");
       setIsDarkMode(isDark);
     };
@@ -65,7 +65,7 @@ export default function MeetingsUI() {
     if (!window.confirm("Are you sure?")) return;
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:3000/api/meetings/${id}`, { method: "DELETE", headers: { Authorization: `Bearer ${token}` } });
+      const res = await fetch(`http://localhost:3000/api/meetings/${id}`, { method: "DELETE", headers: { Authorization: `Bearer ${token}` }});
       if (res.ok) setMeetings((prev) => prev.filter((m) => m.id !== id));
     } catch (err) { console.error(err); }
   };
@@ -90,16 +90,16 @@ export default function MeetingsUI() {
 
   return (
     // 3. THE WRAPPER: Applies 'dark' class if state is true
-    <div className={`w-full h-full`}>
-
+    <div className={`w-full h-full ${isDarkMode ? "dark" : ""}`}>
+      
       {/* ✅ FIX: Replaced [.dark_&] with in-[.dark] 
          This means "If inside a .dark container, use this style"
       */}
-      <div className="w-full h-full flex flex-col min-h-[300px] bg-white dark:bg-slate-900 p-6 rounded-xl shadow-md transition-colors duration-200">
-
+      <div className="w-full h-full flex flex-col min-h-[300px] bg-white in-[.dark]:bg-gray-900 p-6 rounded-xl shadow-md transition-colors duration-200">
+        
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-gray-800 dark:text-slate-400 flex items-center gap-2">
+          <h2 className="text-xl font-bold text-gray-800 in-[.dark]:text-blue-400 flex items-center gap-2">
             <Calendar className="w-5 h-5" />
             Scheduled Meetings
           </h2>
@@ -133,7 +133,7 @@ export default function MeetingsUI() {
                     transition={{ delay: 0.1 * idx }}
                     className="relative bg-white in-[.dark]:bg-gray-800 border border-gray-200 in-[.dark]:border-gray-700 rounded-lg p-4 shadow-sm hover:shadow-md transition-all group"
                   >
-
+                    
                     {/* Admin Actions */}
                     {isAdmin && (
                       <div className="absolute top-3 right-3 flex gap-2">

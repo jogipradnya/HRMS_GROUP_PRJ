@@ -313,102 +313,102 @@ const Chat = () => {
 
   // Listen for incoming messages
   useEffect(() => {
-  const handleReceiveMessage = (data) => {
-    console.log("📥 Chat: Received Message:", data);
+    const handleReceiveMessage = (data) => {
+      console.log("📥 Chat: Received Message:", data);
 
-    // DEBUG: Log emission
-    if (data.id) console.log("📤 Emitting message_delivered for:", data.id);
-    else console.warn("⚠️ Received message without ID, cannot emit delivered");
+      // DEBUG: Log emission
+      if (data.id) console.log("📤 Emitting message_delivered for:", data.id);
+      else console.warn("⚠️ Received message without ID, cannot emit delivered");
 
-    // Update active conversation if applicable
-    const isChattingWithSender =
-      String(data.senderId) === String(selectedChat) &&
-      String(data.receiverId) === String(currentUser?.id);
+      // Update active conversation if applicable
+      const isChattingWithSender =
+        String(data.senderId) === String(selectedChat) &&
+        String(data.receiverId) === String(currentUser?.id);
 
-    const isChattingWithReceiver =
-      String(data.senderId) === String(currentUser?.id) &&
-      String(data.receiverId) === String(selectedChat);
+      const isChattingWithReceiver =
+        String(data.senderId) === String(currentUser?.id) &&
+        String(data.receiverId) === String(selectedChat);
 
-    if (isChattingWithSender || isChattingWithReceiver) {
-      setConversation((prev) => [
-        ...prev,
-        {
-          id: data.id || Date.now(),
-          text: data.message,
-          sender: String(data.senderId) === String(currentUser?.id) ? "me" : "other",
-          time: formatTime(data.created_at),
-          status: "read", // We are watching it now, so it's read
-        },
-      ]);
-      if (data.id) socket.emit("message_read", { messageId: data.id, senderId: data.senderId });
-    }
-
-    // Always mark as delivered
-    if (data.id) socket.emit("message_delivered", { messageId: data.id, senderId: data.senderId });
-
-    // Toast notification
-    if (
-      String(data.receiverId) === String(currentUser?.id) &&
-      String(data.senderId) !== String(currentUser?.id)
-    ) {
-      toast.success(`New message from ${data.author || "User " + data.senderId}`, {
-        icon: "💬",
-        style: {
-          borderRadius: "10px",
-          background: "#333",
-          color: "#fff",
-        },
-      });
-    }
-
-    // Update Sidebar List (Reorder & Unread)
-    setRecentChats((prev) => {
-      const senderId =
-        String(data.senderId) === String(currentUser?.id) ? data.receiverId : data.senderId;
-      const senderIndex = prev.findIndex((c) => String(c.id) === String(senderId));
-
-      let updatedContacts = [...prev];
-      let sender;
-
-      if (senderIndex !== -1) {
-        [sender] = updatedContacts.splice(senderIndex, 1);
-      } else {
-        const userDetails = allUsers.find((u) => String(u.id) === String(senderId));
-        if (!userDetails) {
-          console.warn(`Sender ${senderId} not found in allUsers directory. Using fallback.`);
-          sender = {
-            id: senderId,
-            name: "New Contact",
-            avatar: "?",
-            role: "Employee",
-            status: "online",
-            isRecent: true,
-            unread: false,
-          };
-        } else {
-          sender = { ...userDetails, unread: false };
-        }
+      if (isChattingWithSender || isChattingWithReceiver) {
+        setConversation((prev) => [
+          ...prev,
+          {
+            id: data.id || Date.now(),
+            text: data.message,
+            sender: String(data.senderId) === String(currentUser?.id) ? "me" : "other",
+            time: formatTime(data.created_at),
+            status: "read", // We are watching it now, so it's read
+          },
+        ]);
+        if (data.id) socket.emit("message_read", { messageId: data.id, senderId: data.senderId });
       }
 
-      const isUnread = String(senderId) !== String(selectedChat);
+      // Always mark as delivered
+      if (data.id) socket.emit("message_delivered", { messageId: data.id, senderId: data.senderId });
 
-      updatedContacts.unshift({
-        ...sender,
-        unread: isUnread || sender.unread || false,
-        message: data.message,
-        time: formatTime(data.created_at),
+      // Toast notification
+      if (
+        String(data.receiverId) === String(currentUser?.id) &&
+        String(data.senderId) !== String(currentUser?.id)
+      ) {
+        toast.success(`New message from ${data.author || "User " + data.senderId}`, {
+          icon: "💬",
+          style: {
+            borderRadius: "10px",
+            background: "#333",
+            color: "#fff",
+          },
+        });
+      }
+
+      // Update Sidebar List (Reorder & Unread)
+      setRecentChats((prev) => {
+        const senderId =
+          String(data.senderId) === String(currentUser?.id) ? data.receiverId : data.senderId;
+        const senderIndex = prev.findIndex((c) => String(c.id) === String(senderId));
+
+        let updatedContacts = [...prev];
+        let sender;
+
+        if (senderIndex !== -1) {
+          [sender] = updatedContacts.splice(senderIndex, 1);
+        } else {
+          const userDetails = allUsers.find((u) => String(u.id) === String(senderId));
+          if (!userDetails) {
+            console.warn(`Sender ${senderId} not found in allUsers directory. Using fallback.`);
+            sender = {
+              id: senderId,
+              name: "New Contact",
+              avatar: "?",
+              role: "Employee",
+              status: "online",
+              isRecent: true,
+              unread: false,
+            };
+          } else {
+            sender = { ...userDetails, unread: false };
+          }
+        }
+
+        const isUnread = String(senderId) !== String(selectedChat);
+
+        updatedContacts.unshift({
+          ...sender,
+          unread: isUnread || sender.unread || false,
+          message: data.message,
+          time: formatTime(data.created_at),
+        });
+
+        return updatedContacts;
       });
+    };
 
-      return updatedContacts;
-    });
-  };
+    socket.on("receive_message", handleReceiveMessage);
 
-  socket.on("receive_message", handleReceiveMessage);
-
-  return () => {
-    socket.off("receive_message", handleReceiveMessage);
-  };
-}, [socket, selectedChat, currentUser, allUsers, formatTime]);
+    return () => {
+      socket.off("receive_message", handleReceiveMessage);
+    };
+  }, [socket, selectedChat, currentUser, allUsers, formatTime]);
 
   // --- 5. NEW: Listeners for Status, Edit, Delete ---
   // Ref to store updates that arrive before the message ID is synced
@@ -569,14 +569,14 @@ const Chat = () => {
   }
 
   return (
-    <div className="flex h-screen bg-white">
+    <div className="flex h-screen bg-white dark:bg-[#0C1014] text-gray-900 dark:text-gray-100">
       {/* --- SIDEBAR --- */}
-      <div className={`${chatListOpen ? 'block' : 'hidden'} md:flex flex-col w-full md:w-80 border-r border-gray-200 h-full`}>
+      <div className={`${chatListOpen ? 'block' : 'hidden'} md:flex flex-col w-full md:w-80 border-r border-gray-200 dark:border-[#1F2429] h-full`}>
         {/* Header */}
-        <div className="p-5 border-b border-gray-100 flex items-center justify-between shrink-0">
-          <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Messages</h2>
+        <div className="p-5 border-b border-gray-200 dark:border-[#1F2429] flex items-center justify-between shrink-0">
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">Messages</h2>
           <div className="flex gap-2">
-            <button className="md:hidden p-2 text-gray-500 hover:bg-gray-100 rounded-full" onClick={() => setChatListOpen(false)}>
+            <button className="md:hidden p-2 text-gray-400 hover:bg-[#1F2429] rounded-full" onClick={() => setChatListOpen(false)}>
               <ArrowLeft size={20} />
             </button>
           </div>
@@ -585,13 +585,13 @@ const Chat = () => {
         {/* Search */}
         <div className="px-5 py-4 shrink-0">
           <div className="relative group">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 group-focus-within:text-blue-600 transition-colors" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 group-focus-within:text-blue-500 transition-colors" />
             <input
               type="text"
               placeholder="Search contacts..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-gray-50 border border-gray-200 rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all font-medium text-gray-700 placeholder-gray-400"
+              className="w-full bg-gray-100 dark:bg-[#1F2429] border border-gray-200 dark:border-[#1F2429] rounded-xl pl-10 pr-4 py-2.5 text-sm outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all font-medium text-gray-900 dark:text-gray-200 placeholder-gray-500"
             />
           </div>
         </div>
@@ -606,10 +606,10 @@ const Chat = () => {
             <>
               {displayedContacts.length === 0 && (
                 <div className="flex flex-col items-center justify-center h-40 text-center">
-                  <div className="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mb-3">
-                    <Clock className="w-6 h-6 text-gray-300" />
+                  <div className="w-12 h-12 bg-gray-100 dark:bg-[#1F2429] rounded-full flex items-center justify-center mb-3">
+                    <Clock className="w-6 h-6 text-gray-500" />
                   </div>
-                  <p className="text-sm font-medium text-gray-900">No chats yet</p>
+                  <p className="text-sm font-medium text-gray-900 dark:text-white">No chats yet</p>
                   <p className="text-xs text-gray-500 mt-1 max-w-[150px]">Search for a colleague to start a conversation.</p>
                 </div>
               )}
@@ -617,30 +617,30 @@ const Chat = () => {
                 <div
                   key={contact.id}
                   onClick={() => { setSelectedChat(contact.id); setChatListOpen(false); }}
-                  className={`group flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all duration-200 mb-1 ${selectedChat === contact.id ? 'bg-blue-50/80 shadow-xs border border-blue-100' : 'hover:bg-gray-50 border border-transparent'}`}
+                  className={`group flex items-center gap-3 p-3 rounded-xl cursor-pointer transition-all duration-200 mb-1 ${selectedChat === contact.id ? 'bg-blue-50 dark:bg-[#1F2429] border border-blue-100 dark:border-[#1F2429]' : 'hover:bg-gray-50 dark:hover:bg-[#1F2429] border border-transparent'}`}
                 >
                   {/* Avatar + Status */}
                   <div className="relative shrink-0">
-                    <div className="w-12 h-12 rounded-full bg-linear-to-b from-gray-100 to-gray-200 border border-gray-300 flex items-center justify-center text-gray-600 font-bold text-sm shadow-sm">
+                    <div className="w-12 h-12 rounded-full bg-linear-to-b from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 border border-gray-200 dark:border-gray-600 flex items-center justify-center text-gray-600 dark:text-gray-300 font-bold text-sm shadow-sm">
                       {contact.avatar}
                     </div>
                     {/* Status Dot */}
-                    <div className={`absolute bottom-0.5 right-0.5 w-3.5 h-3.5 rounded-full border-2 border-white ${contact.status === 'online' ? 'bg-green-500' : 'bg-gray-400'}`}></div>
+                    <div className={`absolute bottom-0.5 right-0.5 w-3.5 h-3.5 rounded-full border-2 border-white dark:border-[#0C1014] ${contact.status === 'online' ? 'bg-green-500' : 'bg-gray-500'}`}></div>
                   </div>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-0.5">
-                      <h3 className={`text-sm truncate ${contact.unread ? 'font-bold text-gray-900' : 'font-semibold text-gray-800'}`}>
+                      <h3 className={`text-sm truncate ${contact.unread ? 'font-bold text-gray-900 dark:text-white' : 'font-semibold text-gray-700 dark:text-gray-300'}`}>
                         {contact.name}
                       </h3>
-                      {contact.time && <span className="text-[10px] text-gray-400 font-medium shrink-0 ml-2">{contact.time}</span>}
+                      {contact.time && <span className="text-[10px] text-gray-500 font-medium shrink-0 ml-2">{contact.time}</span>}
                     </div>
                     <div className="flex items-center justify-between">
-                      <p className={`text-xs truncate max-w-40 ${contact.unread ? 'text-gray-900 font-medium' : 'text-gray-500'}`}>
+                      <p className={`text-xs truncate max-w-40 ${contact.unread ? 'text-gray-900 dark:text-white font-medium' : 'text-gray-500'}`}>
                         {contact.message || contact.role}
                       </p>
                       {contact.unread && (
-                        <span className="shrink-0 w-2 h-2 bg-blue-600 rounded-full ml-2"></span>
+                        <span className="shrink-0 w-2 h-2 bg-blue-500 rounded-full ml-2"></span>
                       )}
                     </div>
                   </div>
@@ -654,31 +654,31 @@ const Chat = () => {
 
 
       {/* --- MESSAGING AREA --- */}
-      <div className={`${chatListOpen ? 'hidden md:flex' : 'flex'} flex-1 flex-col bg-slate-50 relative`}>
+      <div className={`${chatListOpen ? 'hidden md:flex' : 'flex'} flex-1 flex-col bg-white dark:bg-[#0C1014] relative`}>
         {selectedChat ? (
           <>
             {/* Chat Header */}
-            <div className="h-[76px] bg-white border-b border-gray-200 flex items-center justify-between px-6 sticky top-0 z-10 shadow-xs">
+            <div className="h-[76px] bg-white dark:bg-[#0C1014] border-b border-gray-200 dark:border-[#1F2429] flex items-center justify-between px-6 sticky top-0 z-10 shadow-xs">
               <div className="flex items-center gap-4">
-                <button className="md:hidden text-gray-500" onClick={() => setChatListOpen(true)}>
+                <button className="md:hidden text-gray-400" onClick={() => setChatListOpen(true)}>
                   <ArrowLeft size={24} />
                 </button>
                 <div className="relative">
-                  <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center font-bold text-gray-600">
+                  <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center font-bold text-gray-600 dark:text-gray-300">
                     {activeChatUser?.avatar}
                   </div>
-                  <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${activeChatUser?.status === 'online' ? 'bg-green-500' : 'bg-gray-400'}`}></div>
+                  <div className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white dark:border-[#0C1014] ${activeChatUser?.status === 'online' ? 'bg-green-500' : 'bg-gray-500'}`}></div>
                 </div>
                 <div>
-                  <h3 className="font-bold text-gray-900 text-sm">{activeChatUser?.name}</h3>
+                  <h3 className="font-bold text-gray-900 dark:text-white text-sm">{activeChatUser?.name}</h3>
                   <p className="text-xs font-medium text-gray-500">{activeChatUser?.status === 'online' ? 'Active Now' : 'Offline'}</p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 text-gray-400">
-                <button className="hover:text-blue-600 transition-colors p-2 rounded-full hover:bg-blue-50"><Phone size={20} /></button>
-                <button className="hover:text-blue-600 transition-colors p-2 rounded-full hover:bg-blue-50"><Video size={20} /></button>
-                <button className="hover:text-gray-600 transition-colors p-2 rounded-full hover:bg-gray-100"><MoreVertical size={20} /></button>
+              <div className="flex items-center gap-4 text-gray-500">
+                <button className="hover:text-blue-500 transition-colors p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#1F2429]"><Phone size={20} /></button>
+                <button className="hover:text-blue-500 transition-colors p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#1F2429]"><Video size={20} /></button>
+                <button className="hover:text-gray-600 dark:hover:text-gray-300 transition-colors p-2 rounded-full hover:bg-gray-100 dark:hover:bg-[#1F2429]"><MoreVertical size={20} /></button>
               </div>
             </div>
 
@@ -690,7 +690,7 @@ const Chat = () => {
               </div> */}
               {conversation.map(msg => (
                 <div key={msg.id} className={`flex ${msg.sender === "me" ? "justify-end" : "justify-start"} group`}>
-                  <div className={`relative max-w-[70%] md:max-w-[60%] rounded-2xl px-5 py-3 shadow-sm ${msg.sender === "me" ? "bg-blue-600 text-white rounded-tr-sm" : "bg-white text-gray-800 border border-gray-100 rounded-tl-sm"}`}>
+                  <div className={`relative max-w-[70%] md:max-w-[60%] rounded-2xl px-5 py-3 shadow-sm ${msg.sender === "me" ? "bg-blue-600 text-white rounded-tr-sm" : "bg-white dark:bg-[#262626] text-gray-800 dark:text-white border border-gray-100 dark:border-[#262626] rounded-tl-sm"}`}>
 
                     {/* Message Text */}
                     <p className={`text-sm leading-relaxed ${msg.is_deleted ? 'italic opacity-60' : ''}`}>
@@ -721,14 +721,14 @@ const Chat = () => {
 
                     {/* Action Menu (Hover) */}
                     {msg.sender === "me" && !msg.is_deleted && (
-                      <div className="absolute top-2 right-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1 bg-white shadow-md rounded-lg p-1 border border-gray-100">
+                      <div className="absolute top-2 right-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity flex gap-1 bg-white dark:bg-[#262626] shadow-md rounded-lg p-1 border border-gray-100 dark:border-[#1F2429]">
                         <button onClick={() => {
                           const newText = prompt("Edit message:", msg.text);
                           if (newText && newText !== msg.text) handleEditMessage(msg.id, newText, selectedChat);
-                        }} className="p-1.5 hover:bg-gray-100 rounded text-gray-600" title="Edit">
+                        }} className="p-1.5 hover:bg-gray-100 dark:hover:bg-[#1F2429] rounded text-gray-400" title="Edit">
                           <Edit2 size={14} />
                         </button>
-                        <button onClick={() => handleDeleteMessage(msg.id, selectedChat)} className="p-1.5 hover:bg-red-50 text-red-500 rounded" title="Delete">
+                        <button onClick={() => handleDeleteMessage(msg.id, selectedChat)} className="p-1.5 hover:bg-gray-100 dark:hover:bg-[#1F2429] text-red-500 rounded" title="Delete">
                           <Trash2 size={14} />
                         </button>
                       </div>
@@ -739,20 +739,20 @@ const Chat = () => {
             </div>
 
             {/* Input Area */}
-            <div className="p-4 bg-white border-t border-gray-200">
-              <div className="flex items-center gap-3 max-w-4xl mx-auto bg-gray-50 border border-gray-200 rounded-xl p-2 pr-2 shadow-xs focus-within:ring-2 focus-within:ring-blue-100 focus-within:border-blue-400 transition-all">
+            <div className="p-4 bg-white dark:bg-[#0C1014] border-t border-gray-200 dark:border-[#1F2429]">
+              <div className="flex items-center gap-3 max-w-4xl mx-auto bg-gray-50 dark:bg-[#1F2429] border border-gray-200 dark:border-[#1F2429] rounded-xl p-2 pr-2 shadow-xs focus-within:ring-1 focus-within:ring-blue-500 focus-within:border-blue-500 transition-all">
                 <input
                   type="text"
                   value={inputMessage}
                   onChange={(e) => setInputMessage(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                   placeholder="Type your message..."
-                  className="flex-1 bg-transparent px-3 py-2 text-sm text-gray-800 outline-none placeholder-gray-400"
+                  className="flex-1 bg-transparent px-3 py-2 text-sm text-gray-900 dark:text-white outline-none placeholder-gray-400 dark:placeholder-gray-500"
                 />
                 <button
                   onClick={handleSendMessage}
                   disabled={!inputMessage.trim()}
-                  className={`p-2.5 rounded-lg transition-all ${inputMessage.trim() ? 'bg-blue-600 text-white shadow-md hover:bg-blue-700 transform hover:scale-105' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
+                  className={`p-2.5 rounded-lg transition-all ${inputMessage.trim() ? 'bg-blue-600 text-white shadow-md hover:bg-blue-700 transform hover:scale-105' : 'bg-gray-200 dark:bg-[#2A3138] text-gray-400 dark:text-gray-500 cursor-not-allowed'}`}
                 >
                   <Send size={18} className={inputMessage.trim() ? 'ml-0.5' : ''} />
                 </button>
@@ -760,12 +760,12 @@ const Chat = () => {
             </div>
           </>
         ) : (
-          <div className="flex-1 flex flex-col items-center justify-center text-gray-300">
-            <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
-              <Info size={40} className="text-gray-400" />
+          <div className="flex-1 flex flex-col items-center justify-center text-gray-500">
+            <div className="w-24 h-24 bg-gray-100 dark:bg-[#1F2429] rounded-full flex items-center justify-center mb-6">
+              <Info size={40} className="text-gray-400 dark:text-gray-600" />
             </div>
-            <p className="text-lg font-semibold text-gray-600">No Chat Selected</p>
-            <p className="text-sm text-gray-400 mt-2 max-w-xs text-center">Choose a colleague from the sidebar to start messaging.</p>
+            <p className="text-lg font-semibold text-gray-700 dark:text-gray-300">No Chat Selected</p>
+            <p className="text-sm text-gray-500 mt-2 max-w-xs text-center">Choose a colleague from the sidebar to start messaging.</p>
           </div>
         )}
       </div>

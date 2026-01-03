@@ -5,6 +5,9 @@ import { createUserService, updateUserService } from "../services/user.service.j
 import { addToken } from "../models/blacklistedTokens.js";
 import pool from "../db/db.js";
 
+/**
+ * SIGNUP - Create a new user
+ */
 export const signup = async (req, res) => {
     try {
         console.log("DATABASE_URL =", process.env.DATABASE_URL);
@@ -30,13 +33,8 @@ export const signup = async (req, res) => {
             gender || 'Not Specified'
         );
 
-        console.log("--------------------------------------------------");
-        console.log("🆕 NEW USER SIGNUP");
-        console.log(`👤 Name: ${newUser.fullname}`);
-        console.log(`📧 Email: ${newUser.email}`);
-        console.log(`🏷️ Designation: ${newUser.designation}`);
-        console.log(`🕒 Time: ${new Date().toLocaleString()}`);
-        console.log("--------------------------------------------------");
+        // Hash password
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         const token = jwt.sign(
             { id: newUser.id, role: newUser.role },
@@ -66,43 +64,30 @@ export const signup = async (req, res) => {
         });
     } catch (error) {
         console.error("❌ Signup Error:", error.message);
-        if (error.message === "User already exists") {
-            return res.status(400).json({ message: "User already exists" });
-        }
         res.status(500).json({ message: "Internal Server Error" });
     }
 };
 
+/**
+ * LOGIN - Authenticate a user
+ */
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
 
-        if (!email || !password) {
-            return res.status(400).json({ message: "All fields are required" });
-        }
+        if (!email || !password) return res.status(400).json({ message: "All fields are required" });
 
         const user = await findUserByEmail(email);
-        if (!user) {
-            return res.status(400).json({ message: "Invalid credentials" });
-        }
+        if (!user) return res.status(400).json({ message: "Invalid credentials" });
 
         const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ message: "Invalid credentials" });
-        }
+        if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
         const token = jwt.sign(
             { id: user.id, role: user.role },
             process.env.JWT_SECRET || "secret",
             { expiresIn: "24h" }
         );
-
-        console.log("--------------------------------------------------");
-        console.log("🔓 USER LOGIN");
-        console.log(`👤 Name: ${user.fullname}`);
-        console.log(`📧 Email: ${user.email}`);
-        console.log(`🕒 Time: ${new Date().toLocaleString()}`);
-        console.log("--------------------------------------------------");
 
         res.status(200).json({
             message: "Login successful",
@@ -122,9 +107,14 @@ export const login = async (req, res) => {
     }
 };
 
+/**
+ * LOGOUT - Blacklist JWT token
+ */
 export const logout = async (req, res) => {
     try {
         const token = req.token;
+        if (!token) return res.status(400).json({ message: "Token not provided" });
+
         await addToken(token);
         res.status(200).json({ message: "Logged out successfully" });
     } catch (error) {
@@ -133,6 +123,9 @@ export const logout = async (req, res) => {
     }
 };
 
+/**
+ * GET ALL USERS - Admin only
+ */
 export const getAllUsers = async (req, res) => {
     try {
         const users = await getAllUsersModel();
