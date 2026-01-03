@@ -15,14 +15,14 @@ const AddEmployeeModal = ({ isOpen, onClose, onUserAdded }) => {
         employee_id: '',
         status: 'ACTIVE'
     });
+
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
     if (!isOpen) return null;
 
-    const handleChange = (e) => {
+    const handleChange = (e) =>
         setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -35,16 +35,13 @@ const AddEmployeeModal = ({ isOpen, onClose, onUserAdded }) => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    Authorization: `Bearer ${token}`
                 },
                 body: JSON.stringify(formData)
             });
 
             const data = await res.json();
-
-            if (!res.ok) {
-                throw new Error(data.message || 'Failed to add employee');
-            }
+            if (!res.ok) throw new Error(data.message || 'Failed to add employee');
 
             onUserAdded(data.user);
             onClose();
@@ -253,7 +250,6 @@ const AddEmployeeModal = ({ isOpen, onClose, onUserAdded }) => {
                                 <option value="INACTIVE">Inactive</option>
                             </select>
                         </div>
-
                     </div>
 
                     {/* Footer */}
