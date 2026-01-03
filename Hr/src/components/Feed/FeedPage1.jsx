@@ -281,77 +281,100 @@ const FeedPage1 = ({ onNavigateBack }) => {
                         </div>
                     </div>
 
-                    {/* Right Sidebar (Restored) */}
-                    <div className="space-y-6">
-                        {/* New Point Alert */}
-                        <div className="bg-white dark:bg-[#1F2429] rounded-2xl shadow-md p-6 border border-gray-100 dark:border-[#1F2429]">
-                            <h3 className="text-lg font-bold text-[#266ECD] dark:text-[#4dabf7] mb-4">Your Points</h3>
-                            <div className="flex items-center gap-3 mb-4">
-                                <div className="text-5xl font-bold text-[#266ECD] dark:text-[#4dabf7]">{userPoints?.toLocaleString() || 0}</div>
-                                <div className="w-10 h-10 rounded-full bg-[#266ECD] flex items-center justify-center">
-                                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4">Reward points balance</p>
-                            <button className="w-full bg-[#266ECD] text-white px-6 py-2.5 rounded-xl font-bold hover:bg-opacity-90 transition-all shadow-lg">
-                                <Link to="/redemption">View Redemption Center</Link>
-                            </button>
-                        </div>
+                   {/* Right Sidebar */}
+<div className="space-y-6">
 
-                        {/* Upcoming Training Session */}
-                        <div className="bg-white dark:bg-[#1F2429] rounded-2xl shadow-md p-6 border border-gray-100 dark:border-[#1F2429]">
-                            <h3 className="text-lg font-bold text-[#266ECD] dark:text-[#4dabf7] mb-4">Don't Miss Out! Upcoming Training Session</h3>
-                            <div className="space-y-2 mb-5">
-                                <p className="text-sm text-gray-700 dark:text-gray-300">
-                                    <span className="font-bold">Date:</span> 29 Oct
-                                </p>
-                                <p className="text-sm text-gray-700 dark:text-gray-300">
-                                    <span className="font-bold">Time:</span> 9:00 AM - 12:00 PM
-                                </p>
-                            </div>
-                            <button className="w-full bg-[#266ECD] text-white px-6 py-2.5 rounded-xl font-bold hover:bg-opacity-90 transition-all shadow-lg">
-                                Register
-                            </button>
-                        </div>
+    {/* Your Points */}
+    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6">
+        <h3 className="text-lg font-bold text-[#266ECD] dark:text-blue-400 mb-4">
+            Your Points
+        </h3>
 
-                        {/* Upcoming Events (dynamic) */}
-                        <div className="bg-white dark:bg-[#1F2429] rounded-2xl shadow-md p-6 border border-gray-100 dark:border-[#1F2429]">
-                            <div className="flex items-center justify-between mb-4">
-                                <h3 className="font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                        <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
-                                    </svg>
-                                    Upcoming Events
-                                </h3>
-                            </div>
-                            <div className="space-y-4">
-                                {eventsLoading ? (
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">Loading events...</p>
-                                ) : events.filter(e => getEventCategory(e.event_date) === 'upcoming').length === 0 ? (
-                                    <p className="text-sm text-gray-500 dark:text-gray-400">No upcoming events</p>
-                                ) : (
-                                    events.filter(e => getEventCategory(e.event_date) === 'upcoming')
-                                        .sort((a, b) => new Date(a.event_date) - new Date(b.event_date))
-                                        .slice(0, 3)
-                                        .map(ev => (
-                                            <div className="flex justify-between items-start" key={ev.id}>
-                                                <div>
-                                                    <p className="text-sm font-semibold text-gray-900 dark:text-white">{ev.title}</p>
-                                                    <p className="text-xs text-gray-500 dark:text-gray-400">{ev.start_time || ''}{ev.end_time ? ` - ${ev.end_time}` : ''}</p>
-                                                </div>
-                                                <span className="text-sm font-bold text-gray-900 dark:text-white">{`${ev.attendee_count ?? 0} attending`}</span>
-                                            </div>
-                                        ))
-                                )}
-                                <Link to="/event" className="text-[#266ECD] dark:text-[#4dabf7] text-sm font-semibold hover:underline">More...</Link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div className="flex items-center gap-3 mb-4">
+            <div className="text-5xl font-bold text-[#266ECD]">
+                {userPoints?.toLocaleString() || 0}
             </div>
+        </div>
 
+        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4">
+            Reward points balance
+        </p>
+
+        <Link
+            to="/redemption"
+            className="block text-center bg-[#266ECD] text-white px-6 py-2.5 rounded-xl font-bold"
+        >
+            View Redemption Center
+        </Link>
+    </div>
+
+    {/* Upcoming Training */}
+    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6">
+        <h3 className="text-lg font-bold text-[#266ECD] dark:text-blue-400 mb-4">
+            Don't Miss Out! Upcoming Training Session
+        </h3>
+
+        <div className="space-y-2 mb-5">
+            <p className="text-sm text-gray-700 dark:text-gray-300">
+                <span className="font-bold">Date:</span> 29 Oct
+            </p>
+            <p className="text-sm text-gray-700 dark:text-gray-300">
+                <span className="font-bold">Time:</span> 9:00 AM - 12:00 PM
+            </p>
+        </div>
+
+        <button className="w-full bg-[#266ECD] text-white px-6 py-2.5 rounded-xl font-bold">
+            Register
+        </button>
+    </div>
+
+    {/* Upcoming Events */}
+    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6">
+        <h3 className="font-bold text-gray-900 dark:text-white mb-4">
+            Upcoming Events
+        </h3>
+
+        <div className="space-y-4">
+            {eventsLoading ? (
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Loading events...
+                </p>
+            ) : events.filter(e => getEventCategory(e.event_date) === 'upcoming').length === 0 ? (
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                    No upcoming events
+                </p>
+            ) : (
+                events
+                    .filter(e => getEventCategory(e.event_date) === 'upcoming')
+                    .slice(0, 3)
+                    .map(ev => (
+                        <div className="flex justify-between items-start" key={ev.id}>
+                            <div>
+                                <p className="text-sm font-semibold text-gray-900 dark:text-gray-200">
+                                    {ev.title}
+                                </p>
+                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                    {ev.start_time || ''}
+                                    {ev.end_time ? ` - ${ev.end_time}` : ''}
+                                </p>
+                            </div>
+                            <span className="text-sm font-bold text-gray-900 dark:text-white">
+                                {`${ev.attendee_count ?? 0} attending`}
+                            </span>
+                        </div>
+                    ))
+            )}
+
+            <Link
+                to="/event"
+                className="text-[#266ECD] text-sm font-semibold hover:underline"
+            >
+                More...
+            </Link>
+        </div>
+    </div>
+
+</div>
             {/* Give Points Modal */}
             {showGivePointsModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
