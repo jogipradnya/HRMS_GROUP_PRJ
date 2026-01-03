@@ -14,7 +14,7 @@ export default function MeetingModal({ isOpen, onClose, onMeetingSaved, onMeetin
         // Edit Mode
         setTitle(meetingToEdit.title);
         const dateObj = new Date(meetingToEdit.meeting_date);
-        setMeetingDate(dateObj.toISOString().split('T')[0]); 
+        setMeetingDate(dateObj.toISOString().split('T')[0]);
         setStartTime(meetingToEdit.start_time);
         setEndTime(meetingToEdit.end_time);
       } else {
@@ -37,7 +37,7 @@ export default function MeetingModal({ isOpen, onClose, onMeetingSaved, onMeetin
       const token = localStorage.getItem("token");
       const isEditMode = !!meetingToEdit;
       const method = isEditMode ? "PUT" : "POST";
-      const url = isEditMode 
+      const url = isEditMode
         ? `http://localhost:3000/api/meetings/${meetingToEdit.id}`
         : "http://localhost:3000/api/meetings";
 
@@ -63,9 +63,9 @@ export default function MeetingModal({ isOpen, onClose, onMeetingSaved, onMeetin
 
       // ✅ FIX IS HERE: Call the correct function prop
       if (onMeetingSaved) {
-          onMeetingSaved(data.meeting || data); 
+        onMeetingSaved(data.meeting || data);
       }
-      
+
       onClose();
 
     } catch (err) {
@@ -77,7 +77,7 @@ export default function MeetingModal({ isOpen, onClose, onMeetingSaved, onMeetin
 
   const handleDelete = async () => {
     if (!window.confirm("Are you sure you want to cancel this meeting?")) return;
-    
+
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
@@ -102,15 +102,15 @@ export default function MeetingModal({ isOpen, onClose, onMeetingSaved, onMeetin
   };
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white w-[420px] rounded-xl shadow-lg p-6">
+    <div class Name="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+      <div className="bg-white dark:bg-slate-900 w-[420px] rounded-xl shadow-lg p-6">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-bold text-gray-800">
+          <h2 className="text-lg font-bold text-gray-800 dark:text-slate-100">
             {meetingToEdit ? "Edit Meeting" : "Add Meeting"}
           </h2>
           {meetingToEdit && (
-            <button 
-              type="button" 
+            <button
+              type="button"
               onClick={handleDelete}
               className="text-red-500 text-sm hover:underline"
             >
@@ -123,7 +123,7 @@ export default function MeetingModal({ isOpen, onClose, onMeetingSaved, onMeetin
           <input
             type="text"
             placeholder="Meeting title"
-            className="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full dark:bg-slate-800 border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
@@ -131,7 +131,7 @@ export default function MeetingModal({ isOpen, onClose, onMeetingSaved, onMeetin
 
           <input
             type="date"
-            className="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+            className="w-full dark:bg-slate-800 border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
             value={meetingDate}
             onChange={(e) => setMeetingDate(e.target.value)}
             required
@@ -140,14 +140,14 @@ export default function MeetingModal({ isOpen, onClose, onMeetingSaved, onMeetin
           <div className="flex gap-2">
             <input
               type="time"
-              className="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full dark:bg-slate-800 border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
               value={startTime}
               onChange={(e) => setStartTime(e.target.value)}
               required
             />
             <input
               type="time"
-              className="w-full border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full dark:bg-slate-800 border rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
               value={endTime}
               onChange={(e) => setEndTime(e.target.value)}
               required
@@ -158,14 +158,14 @@ export default function MeetingModal({ isOpen, onClose, onMeetingSaved, onMeetin
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-sm rounded-md border hover:bg-gray-50"
+              className="px-4 py-2 text-sm rounded-md dark:bg-slate-800 border hover:bg-gray-50"
             >
               Close
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-4 py-2 text-sm rounded-md bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
+              className="px-4 py-2 text-sm rounded-md dark:bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
             >
               {loading ? "Saving..." : "Save Changes"}
             </button>

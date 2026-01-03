@@ -224,13 +224,13 @@ function EmployeesPage() {
   const isAdmin = currentUser?.role === 'Admin';
 
   return (
-    <div className="flex bg-[#f9fafb] min-h-screen relative font-inter">
+    <div className="flex bg-[#f9fafb] dark:bg-slate-800 min-h-screen relative font-inter">
       <div className="w-full transition-all duration-300">
 
         {/* Mobile Header */}
-        <div className="lg:hidden bg-white p-4 shadow-sm flex items-center justify-between sticky top-0 z-30 border-b border-gray-100">
-          <h1 className="text-xl font-bold text-gray-900">HRMS</h1>
-          <button onClick={() => setIsSidebarOpen(true)} className="p-2 text-gray-600">
+        <div className="lg:hidden bg-white dark:bg-slate-800 p-4 shadow-sm flex items-center justify-between sticky top-0 z-30 border-b border-gray-100 dark:border-slate-700">
+          <h1 className="text-xl font-bold text-gray-900 dark:text-slate-100">HRMS</h1>
+          <button onClick={() => setIsSidebarOpen(true)} className="p-2 text-gray-600 dark:text-slate-400">
             <i className="fas fa-bars text-2xl"></i>
           </button>
         </div>
@@ -243,18 +243,18 @@ function EmployeesPage() {
               <nav className="flex mb-2" aria-label="Breadcrumb">
                 <ol className="inline-flex items-center space-x-1 md:space-x-3">
                   <li className="inline-flex items-center">
-                    <span className="text-sm font-medium text-gray-500">Employee Management</span>
+                    <span className="text-sm font-medium text-gray-500  dark:text-slate-400">Employee Management</span>
                   </li>
                   <li>
                     <div className="flex items-center">
-                      <span className="mx-2 text-gray-400">/</span>
-                      <span className="text-sm font-medium text-gray-900">Employees</span>
+                      <span className="mx-2 text-gray-400 dark:text-slate-400">/</span>
+                      <span className="text-sm font-medium text-gray-900 dark:text-slate-100">Employees</span>
                     </div>
                   </li>
                 </ol>
               </nav>
-              <h1 className="text-3xl font-bold text-gray-900 tracking-tight">Employees Directory</h1>
-              <p className="text-sm text-gray-500 mt-1">Manage and view all employee profiles</p>
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-slate-100 tracking-tight">Employees Directory</h1>
+              <p className="text-sm text-gray-500 dark:text-slate-400 mt-1">Manage and view all employee profiles</p>
             </div>
 
             <div className="flex gap-3">
@@ -275,27 +275,27 @@ function EmployeesPage() {
           </div>
 
           {/* Controls Bar */}
-          <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-sm mb-6 flex flex-col md:flex-row gap-4 justify-between items-center">
+          <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm mb-6 flex flex-col md:flex-row gap-4 justify-between items-center">
 
             {/* Search */}
             <div className="relative w-full md:w-96">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-100 w-4 h-4" />
               <input
                 type="text"
                 placeholder="Search employees..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-100 focus:border-blue-500 outline-none"
+                className="w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-700 rounded-lg text-sm focus:ring-2 focus:ring-blue-100 focus:border-blue-500 outline-none dark:text-slate-100"
               />
             </div>
 
             {/* Filters (Visual Only for now) */}
             <div className="flex gap-2 w-full md:w-auto">
-              <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 bg-white">
+              <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white px-4 py-1.5 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
                 <Filter size={16} />
                 Filter
               </button>
-              <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 bg-white">
+              <button className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white px-4 py-1.5 rounded-md text-sm font-medium hover:bg-blue-700 transition-colors">
                 <Download size={16} />
                 Export
               </button>
@@ -303,11 +303,11 @@ function EmployeesPage() {
           </div>
 
           {/* Table View */}
-          <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+          <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 rounded-xl shadow-sm overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-gray-50/50 border-b border-gray-200 text-xs uppercase tracking-wider text-gray-500 font-semibold">
+                  <tr className="bg-gray-50/50 dark:bg-slate-700 border-b border-gray-200 text-xs uppercase tracking-wider text-gray-500 font-semibold dark:text-slate-100">
                     <th className="px-6 py-4">Employee</th>
                     <th className="px-6 py-4">Role & Dept</th>
                     <th className="px-6 py-4">Contact</th>
@@ -321,112 +321,112 @@ function EmployeesPage() {
                   {loading ? (
                     <tr><td colSpan="6" className="p-8 text-center text-gray-500">Loading directory...</td></tr>
                   ) : filteredUsers.length === 0 ? (
-                    <tr><td colSpan="6" className="p-8 text-center text-gray-500">No employees found.</td></tr>
+                    <tr><td colSpan="6" className="p-8 text-center text-gray-500 dark:text-slate-400">No employees found.</td></tr>
                   ) : (
                     filteredUsers.map((user) => {
                       const rawStatus = user.status || user.employee_status || user.status_of_employee || user.status_of_employment || '';
                       const status = (rawStatus || '').toString().trim().toUpperCase();
                       const statusLabel = status || 'UNKNOWN';
                       return (
-                      <tr key={user.id} className="hover:bg-gray-50/80 transition-colors group">
-                        <td className="px-6 py-4">
-                          <div className="flex items-center gap-4">
-                            <img
-                              src={user.profile_picture ? (user.profile_picture.startsWith('http') ? user.profile_picture : `http://localhost:3000${user.profile_picture}`) : "/pexels-olly-927022.jpg"}
-                              alt=""
-                              className="w-10 h-10 rounded-full object-cover border border-gray-200"
-                            />
+                        <tr key={user.id} className="hover:bg-gray-50/80 dark:hover:bg-slate-800 transition-colors group">
+                          <td className="px-6 py-4">
+                            <div className="flex items-center gap-4">
+                              <img
+                                src={user.profile_picture ? (user.profile_picture.startsWith('http') ? user.profile_picture : `http://localhost:3000${user.profile_picture}`) : "/pexels-olly-927022.jpg"}
+                                alt=""
+                                className="w-10 h-10 rounded-full object-cover border border-gray-200 dark:border-slate-700"
+                              />
+                              <div>
+                                <div className="font-bold text-gray-900 dark:text-slate-100">{user.fullname}</div>
+                                <div className="text-xs text-gray-500 dark:text-slate-400">{user.employee_id || `#EMP-${user.id}`}</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="font-medium text-gray-800 dark:text-slate-100">{user.designation || "N/A"}</div>
+                            <div className="text-xs text-gray-500">{user.department || "General"}</div>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex flex-col gap-1 dark:text-slate-400">
+                              <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-slate-400">
+                                <Mail size={12} className="text-gray-400" />
+                                {user.email}
+                              </div>
+                              <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-slate-400">
+                                <Phone size={12} className="text-gray-400" />
+                                {user.phone || "N/A"}
+                              </div>
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 text-sm font-semibold text-gray-800 dark:text-slate-100">
+                            {user.points || 0}
+                          </td>
+                          <td className="px-6 py-4">
                             <div>
-                              <div className="font-bold text-gray-900">{user.fullname}</div>
-                              <div className="text-xs text-gray-500">{user.employee_id || `#EMP-${user.id}`}</div>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <div className="font-medium text-gray-800">{user.designation || "N/A"}</div>
-                          <div className="text-xs text-gray-500">{user.department || "General"}</div>
-                        </td>
-                        <td className="px-6 py-4">
-                          <div className="flex flex-col gap-1">
-                            <div className="flex items-center gap-2 text-xs text-gray-600">
-                              <Mail size={12} className="text-gray-400" />
-                              {user.email}
-                            </div>
-                            <div className="flex items-center gap-2 text-xs text-gray-600">
-                              <Phone size={12} className="text-gray-400" />
-                              {user.phone || "N/A"}
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 text-sm font-semibold text-gray-800">
-                          {user.points || 0}
-                        </td>
-                        <td className="px-6 py-4">
-                          <div>
-                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${status === 'ACTIVE' ? 'bg-green-50 text-green-700 border border-green-100' :
-                              status === 'INACTIVE' ? 'bg-red-50 text-red-700 border border-red-100' : status === 'IDLE' ? 'bg-yellow-50 text-yellow-700 border border-yellow-100' : status === 'RESIGNED' ? 'bg-orange-50 text-orange-700 border border-orange-100' : 'bg-gray-100 text-gray-700'
-                            }`}>
-                              <span className={`w-1.5 h-1.5 rounded-full mr-1.5 ${status === 'ACTIVE' ? 'bg-green-500' : status === 'INACTIVE' ? 'bg-red-500' : status === 'IDLE' ? 'bg-yellow-500' : status === 'RESIGNED' ? 'bg-orange-500' : 'bg-gray-400'}`}></span>
-                              {statusLabel}
-                            </span>
-                            {isAdmin && (
-                              <>
-                                {status === 'RESIGNED' ? (
-                                  <button onClick={() => handleReinstate(user.id)} className="ml-2 text-xs px-2 py-0.5 rounded bg-green-50 border text-green-600 hover:bg-green-100">Reinstate</button>
-                                ) : (
-                                  <>
-                                    <button onClick={() => handleToggleStatus(user.id, status)} className="ml-2 text-xs px-2 py-0.5 rounded bg-gray-50 border text-gray-600 hover:bg-gray-100">{(status === 'ACTIVE' || status === 'IDLE') ? 'Set Inactive' : 'Set Active'}</button>
-                                    <button onClick={() => handleMarkResigned(user.id)} className="ml-2 text-xs px-2 py-0.5 rounded bg-red-50 border text-red-600 hover:bg-red-100">Mark Resigned</button>
-                                  </>
-                                )}
-                              </>
-                            )}
-                            {user.taskSummary && (
-                              (user.taskSummary.total || 0) > 0 ? (
-                                <div className="flex items-center gap-2 mt-2">
-                                  <span className="inline-flex items-center gap-2 px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-700">
-                                    <strong className="text-sm">{user.taskSummary.total || 0}</strong>
-                                    <span className="hidden sm:inline">tasks</span>
-                                  </span>
-                                  <span className="inline-flex items-center gap-2 px-2 py-0.5 rounded-full text-xs bg-green-50 text-green-700">
-                                    <strong className="text-sm">{user.taskSummary.completed || 0}</strong>
-                                    <span className="hidden sm:inline">done</span>
-                                  </span>
-                                  {user.taskSummary.overdue > 0 && (
-                                    <span className="inline-flex items-center gap-2 px-2 py-0.5 rounded-full text-xs bg-red-50 text-red-700">
-                                      <strong className="text-sm">{user.taskSummary.overdue}</strong>
-                                      <span className="hidden sm:inline">overdue</span>
-                                    </span>
+                              <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${status === 'ACTIVE' ? 'bg-green-50 text-green-700 border border-green-100' :
+                                status === 'INACTIVE' ? 'bg-red-50 text-red-700 border border-red-100' : status === 'IDLE' ? 'bg-yellow-50 text-yellow-700 border border-yellow-100' : status === 'RESIGNED' ? 'bg-orange-50 text-orange-700 border border-orange-100' : 'bg-gray-100 text-gray-700'
+                                }`}>
+                                <span className={`w-1.5 h-1.5 rounded-full mr-1.5 ${status === 'ACTIVE' ? 'bg-green-500' : status === 'INACTIVE' ? 'bg-red-500' : status === 'IDLE' ? 'bg-yellow-500' : status === 'RESIGNED' ? 'bg-orange-500' : 'bg-gray-400'}`}></span>
+                                {statusLabel}
+                              </span>
+                              {isAdmin && (
+                                <>
+                                  {status === 'RESIGNED' ? (
+                                    <button onClick={() => handleReinstate(user.id)} className="ml-2 text-xs px-2 py-0.5 rounded bg-green-50 border text-green-600 hover:bg-green-100">Reinstate</button>
+                                  ) : (
+                                    <>
+                                      <button onClick={() => handleToggleStatus(user.id, status)} className="ml-2 text-xs px-2 py-0.5 rounded bg-gray-50 border text-gray-600 hover:bg-gray-100">{(status === 'ACTIVE' || status === 'IDLE') ? 'Set Inactive' : 'Set Active'}</button>
+                                      <button onClick={() => handleMarkResigned(user.id)} className="ml-2 text-xs px-2 py-0.5 rounded bg-red-50 border text-red-600 hover:bg-red-100">Mark Resigned</button>
+                                    </>
                                   )}
-                                </div>
-                              ) : (
-                                <div className="text-xs text-gray-400 mt-2">No open tasks</div>
-                              )
-                            )}
-                          </div>
-                        </td>
-                        <td className="px-6 py-4 text-sm text-gray-600">
-                          {user.date_of_joining ? new Date(user.date_of_joining).toLocaleDateString() : (user.created_at ? new Date(user.created_at).toLocaleDateString() : '-')}
-                        </td>
-                        <td className="px-6 py-4 text-right">
-                          <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <button onClick={() => navigate(`/profile/${user.id}`)} className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="View Profile">
-                              <MoreVertical size={16} />
-                            </button>
-                            {/* Admin Actions */}
-                            {isAdmin && (
-                              <button
-                                onClick={() => handleDelete(user.id)}
-                                className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                                title="Delete User"
-                              >
-                                <Trash2 size={16} />
+                                </>
+                              )}
+                              {user.taskSummary && (
+                                (user.taskSummary.total || 0) > 0 ? (
+                                  <div className="flex items-center gap-2 mt-2">
+                                    <span className="inline-flex items-center gap-2 px-2 py-0.5 rounded-full text-xs bg-gray-100 text-gray-700">
+                                      <strong className="text-sm">{user.taskSummary.total || 0}</strong>
+                                      <span className="hidden sm:inline">tasks</span>
+                                    </span>
+                                    <span className="inline-flex items-center gap-2 px-2 py-0.5 rounded-full text-xs bg-green-50 text-green-700">
+                                      <strong className="text-sm">{user.taskSummary.completed || 0}</strong>
+                                      <span className="hidden sm:inline">done</span>
+                                    </span>
+                                    {user.taskSummary.overdue > 0 && (
+                                      <span className="inline-flex items-center gap-2 px-2 py-0.5 rounded-full text-xs bg-red-50 text-red-700">
+                                        <strong className="text-sm">{user.taskSummary.overdue}</strong>
+                                        <span className="hidden sm:inline">overdue</span>
+                                      </span>
+                                    )}
+                                  </div>
+                                ) : (
+                                  <div className="text-xs text-gray-400 mt-2">No open tasks</div>
+                                )
+                              )}
+                            </div>
+                          </td>
+                          <td className="px-6 py-4 text-sm text-gray-600 dark:text-slate-400">
+                            {user.date_of_joining ? new Date(user.date_of_joining).toLocaleDateString() : (user.created_at ? new Date(user.created_at).toLocaleDateString() : '-')}
+                          </td>
+                          <td className="px-6 py-4 text-right">
+                            <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                              <button onClick={() => navigate(`/profile/${user.id}`)} className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="View Profile">
+                                <MoreVertical size={16} />
                               </button>
-                            )}
-                          </div>
-                        </td>
-                      </tr>
-                    );
+                              {/* Admin Actions */}
+                              {isAdmin && (
+                                <button
+                                  onClick={() => handleDelete(user.id)}
+                                  className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                                  title="Delete User"
+                                >
+                                  <Trash2 size={16} />
+                                </button>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      );
                     })
                   )}
                 </tbody>
@@ -434,11 +434,11 @@ function EmployeesPage() {
             </div>
 
             {/* Pagination Footer (Static for now) */}
-            <div className="px-6 py-4 border-t border-gray-200 bg-gray-50/50 flex items-center justify-between">
-              <span className="text-sm text-gray-500">Showing {filteredUsers.length} employees</span>
+            <div className="px-6 py-4 border-t border-gray-200 bg-gray-50/50 dark:bg-slate-700 flex items-center justify-between">
+              <span className="text-sm text-gray-500 dark:text-slate-100">Showing {filteredUsers.length} employees</span>
               <div className="flex gap-2">
-                <button disabled className="px-3 py-1 text-sm border border-gray-200 rounded-md bg-white text-gray-400 cursor-not-allowed">Previous</button>
-                <button disabled className="px-3 py-1 text-sm border border-gray-200 rounded-md bg-white text-gray-400 cursor-not-allowed">Next</button>
+                <button disabled className="px-3 py-1 text-sm bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition-colors cursor-not-allowed">Previous</button>
+                <button disabled className="px-3 py-1 text-sm bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition-colors cursor-not-allowed">Next</button>
               </div>
             </div>
           </div>

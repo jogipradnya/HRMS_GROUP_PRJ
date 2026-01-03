@@ -11,6 +11,11 @@ body {
   /* Light gray neutral background */
 }
 
+.dark body {
+  background-color: #020617;
+  /*Dark mode body bg*/
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

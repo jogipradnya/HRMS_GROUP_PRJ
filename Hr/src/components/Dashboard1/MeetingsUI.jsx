@@ -38,7 +38,7 @@ export default function MeetingsUI() {
     const observer = new MutationObserver(() => {
       checkTheme();
     });
-    
+
     observer.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ["class"],
@@ -59,7 +59,7 @@ export default function MeetingsUI() {
 
   const handleOpenAdd = () => { setSelectedMeeting(null); setShowModal(true); };
   const handleOpenEdit = (m) => { if (isAdmin) { setSelectedMeeting(m); setShowModal(true); } };
-  
+
   const handleDeleteDirectly = async (id, e) => {
     e.stopPropagation();
     if (!window.confirm("Are you sure?")) return;
@@ -159,12 +159,12 @@ export default function MeetingsUI() {
 
                     {/* Date & Time Text */}
                     <div className="mt-1 flex flex-col">
-                        <span className="text-xs font-medium text-blue-600 in-[.dark]:text-blue-400 uppercase tracking-wide">
-                          {m.fullDate}
-                        </span>
-                        <p className="text-gray-500 in-[.dark]:text-gray-400 text-sm">
-                          {m.timeDisplay}
-                        </p>
+                      <span className="text-xs font-medium text-blue-600 in-[.dark]:text-blue-400 uppercase tracking-wide">
+                        {m.fullDate}
+                      </span>
+                      <p className="text-gray-500 in-[.dark]:text-gray-400 text-sm">
+                        {m.timeDisplay}
+                      </p>
                     </div>
 
                     {/* Join Button */}

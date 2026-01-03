@@ -1,65 +1,64 @@
 import React from "react";
-import { ArrowUpRight, ArrowDownRight, Users, Eye, FileText, UserMinus } from "lucide-react";
+import { Users, Eye, FileText, UserMinus } from "lucide-react";
 
 export default function StatsCards({ stats }) {
-  // Safe defaults if stats is null (loading)
-  const totalEmployees = stats?.totalEmployees ?? 0;
-  const jobViews = stats?.jobViews ?? 0;
-  const jobApplications = stats?.jobApplications ?? 0;
-  const resignedEmployees = stats?.resignedEmployees ?? 0;
-
-  // We don't have historical data for "change" percentage yet, so I'll leave placeholders or remove them.
-  // For now, I'll remove the specific percentage pills or set them to 0% to be neutral, 
-  // as calculating growth requires historical snapshots which we just added support for in dashboard_stats table but haven't fully implemented querying yet.
-
   const cards = [
     {
       title: "Total Employees",
-      value: totalEmployees,
+      value: stats?.totalEmployees ?? 0,
       label: "active employees",
-      icon: <Users size={20} className="text-blue-600" />,
-      bg: "bg-blue-50"
+      icon: <Users size={20} />,
     },
     {
       title: "Job Views",
-      value: jobViews,
+      value: stats?.jobViews ?? 0,
       label: "total views",
-      icon: <Eye size={20} className="text-indigo-600" />,
-      bg: "bg-indigo-50"
+      icon: <Eye size={20} />,
     },
     {
       title: "Job Applied",
-      value: jobApplications,
+      value: stats?.jobApplications ?? 0,
       label: "total applications",
-      icon: <FileText size={20} className="text-emerald-600" />,
-      bg: "bg-emerald-50"
+      icon: <FileText size={20} />,
     },
     {
       title: "Resigned Employees",
-      value: resignedEmployees,
+      value: stats?.resignedEmployees ?? 0,
       label: "resigned employees",
-      icon: <UserMinus size={20} className="text-orange-600" />,
-      bg: "bg-orange-50"
+      icon: <UserMinus size={20} />,
     },
   ];
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {cards.map((card, index) => (
-        <div
-          key={index}
-          className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300"
-        >
+        <div key={index} className="group bg-white dark:bg-slate-900 p-6 rounded-xl border border-[#ddeeff] dark:border-slate-800 shadow-sm hover:shadow-lg dark:hover:shadow-[#2c50ab]/30 hover:-translate-y-1 transition-all duration-300 ease-out">
           <div className="flex justify-between items-start mb-4">
-            <h3 className="text-gray-500 text-sm font-medium">{card.title}</h3>
-            <div className={`p-2 rounded-lg ${card.bg}`}>
+            <h3 className="text-sm font-medium text-slate-500 dark:text-slate-400">
+              {card.title}
+            </h3>
+
+            <div
+              className="
+                p-2 rounded-lg
+                bg-[#ddeeff]
+                text-[#2c50ab]
+                group-hover:bg-[#aaccff]
+                dark:bg-[#2c50ab]/30
+                dark:text-[#88aaff]
+                dark:group-hover:bg-[#2c50ab]/50
+                transition-colors duration-300
+              "
+            >
               {card.icon}
             </div>
           </div>
-          <p className="text-3xl font-bold text-gray-900 tracking-tight">
+
+          <p className="text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">
             {card.value.toLocaleString()}
           </p>
-          <p className="text-xs text-gray-400 mt-1 capitalize">
+
+          <p className="text-xs mt-1 capitalize text-slate-400 dark:text-slate-500">
             {card.label}
           </p>
         </div>

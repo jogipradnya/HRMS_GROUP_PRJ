@@ -170,16 +170,16 @@ export default function RecognitionPage() {
   const renderRecipientForm = () => (
     <>
 
-      <h2 className="text-lg font-semibold text-purple-700">
+      <h2 className="text-lg font-semibold text-purple-700 dark:text-purple-400">
         Select the Recipient
       </h2>
-      <p className="text-gray-500 mb-6">
+      <p className="text-gray-500 mb-6 dark:text-slate-400">
         Choose a colleague you'd like to appreciate
       </p>
 
       {/* Recipient Name */}
       <div className="mb-5">
-        <label className="block text-sm font-semibold mb-1">
+        <label className="block text-sm font-semibold mb-1 dark:text-slate-400">
           Recipient
         </label>
 
@@ -197,10 +197,10 @@ export default function RecognitionPage() {
             setFilteredUsers(matches);
           }}
           placeholder="Enter recipient name"
-          className="w-full p-3 border rounded-lg"
+          className="w-full p-3 border rounded-lg dark:bg-slate-900 dark:text-gray-100"
         />
         {filteredUsers.length > 0 && (
-          <ul className="border rounded-lg mt-1 bg-white max-h-40 overflow-y-auto">
+          <ul className="border rounded-lg mt-1 bg-white max-h-40 overflow-y-auto dark:bg-slate-900 dark:text-gray-100">
             {filteredUsers.map(user => (
               <li
                 key={user.id}
@@ -209,7 +209,7 @@ export default function RecognitionPage() {
                   setSelectedRecipientId(user.id);
                   setFilteredUsers([]);
                 }}
-                className="p-2 hover:bg-gray-100 cursor-pointer"
+                className="p-2 hover:bg-gray-100 dark:hover:bg-slate-900 dark:hover:text-gray-100 cursor-pointer"
               >
                 {user.fullname}
               </li>
@@ -222,14 +222,14 @@ export default function RecognitionPage() {
 
       {/* Department */}
       <div className="mb-4">
-        <label className="block text-sm font-semibold mb-1">
+        <label className="block text-sm font-semibold mb-1 dark:text-slate-400">
           Department/Team
         </label>
         <select
           name="department"
           value={formData.department}
           onChange={handleChange}
-          className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-400"
+          className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-400 dark:border-slate-600 dark:text-gray-100 dark:bg-slate-900"
         >
           <option value="IT & Systems">IT & Systems</option>
           <option value="HR">HR</option>
@@ -242,7 +242,7 @@ export default function RecognitionPage() {
       {/* Employee ID + Job Title */}
       <div className="grid grid-cols-2 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-semibold mb-1">
+          <label className="block text-sm font-semibold mb-1 dark:text-slate-400">
             Employee ID
           </label>
           <input
@@ -251,19 +251,19 @@ export default function RecognitionPage() {
             value={formData.employeeId}
             onChange={handleChange}
             placeholder="Enter ID"
-            className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-400"
+            className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-400 dark:border-slate-600 dark:text-gray-100 dark:bg-slate-900"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold mb-1">
+          <label className="block text-sm font-semibold mb-1 dark:text-slate-400">
             Job Title
           </label>
           <select
             name="jobTitle"
             value={formData.jobTitle}
             onChange={handleChange}
-            className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-400"
+            className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-400 dark:border-slate-600 dark:text-gray-100 dark:bg-slate-900"
           >
             <option value="">Select</option>
             <option value="Software Engineer">Software Engineer</option>
@@ -282,23 +282,23 @@ export default function RecognitionPage() {
 
   const renderAppreciationForm = () => (
     <>
-      <h2 className="text-lg font-semibold text-purple-700">
+      <h2 className="text-lg font-semibold text-purple-700 dark:text-purple-400">
         Reason for Appreciation
       </h2>
-      <p className="text-gray-500 mb-6">
+      <p className="text-gray-500 dark:text-slate-400 mb-6">
         Tell us why your colleague deserves appreciation
       </p>
 
       {/* Type of Appreciation */}
       <div className="mb-5">
-        <label className="block text-sm font-semibold mb-1">
+        <label className="block text-sm font-semibold mb-1 dark:text-slate-400">
           Type of Appreciation
         </label>
         <select
           name="appreciationType"
           value={formData.appreciationType}
           onChange={handleChange}
-          className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-400"
+          className="w-full p-3 border border-gray-200 dark:border-slate-600 dark:text-gray-100 rounded-lg focus:ring-2 focus:ring-purple-400 dark:focus:ring-purple-500 dark:bg-slate-900"
         >
           <option value="">Select</option>
           <option value="Teamwork">Teamwork</option>
@@ -310,7 +310,7 @@ export default function RecognitionPage() {
 
       {/* Specific Achievement */}
       <div className="mb-5">
-        <label className="block text-sm font-semibold mb-1">
+        <label className="block text-sm font-semibold mb-1 dark:text-slate-400">
           Specific Achievement
         </label>
         <textarea
@@ -318,7 +318,7 @@ export default function RecognitionPage() {
           value={formData.achievement}
           onChange={handleChange}
           rows="3"
-          className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-400"
+          className="w-full p-3 border border-gray-200 dark:border-slate-600 dark:text-slate-100 rounded-lg focus:ring-2 focus:ring-purple-400"
           placeholder="Describe the action"
         />
       </div>
@@ -326,20 +326,20 @@ export default function RecognitionPage() {
       {/* Date + Attachment */}
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-semibold mb-1">
+          <label className="block text-sm font-semibold mb-1 dark:text-slate-400">
             Date
           </label>
           <input
             type="date"
-            className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-400"
+            className="w-full p-3 border border-gray-200 dark:border-slate-600 dark:text-slate-300 rounded-lg focus:ring-2 focus:ring-purple-400"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-semibold mb-1">
+          <label className="block text-sm font-semibold mb-1 dark:text-slate-400">
             Attachments (Optional)
           </label>
-          <label className="flex items-center justify-center gap-2 w-full p-3 border border-dashed border-purple-400 rounded-lg cursor-pointer text-purple-600 font-medium hover:bg-purple-50">
+          <label className="flex items-center justify-center gap-2 w-full p-3 border border-dashed border-purple-400 rounded-lg cursor-pointer text-purple-600 font-medium hover:bg-purple-50 dark:border-slate-600 dark:text-purple-600 dark:hover:bg-slate-800 dark:hover:text-purple-400">
             Choose a File
             <input type="file" className="hidden" />
           </label>
@@ -351,16 +351,16 @@ export default function RecognitionPage() {
 
   const renderDetailsForm = () => (
     <>
-      <h2 className="text-lg font-semibold text-purple-700">
+      <h2 className="text-lg font-semibold text-purple-700 dark:text-purple-400">
         Add Context (Optional)
       </h2>
-      <p className="text-gray-500 mb-6">
+      <p className="text-gray-500 mb-6 dark:text-slate-400">
         Share any additional details or a personal message
       </p>
 
       {/* Message */}
-      <div className="mb-5">
-        <label className="block text-sm font-semibold mb-1">
+      <div className="mb-5 dark:text-slate-400">
+        <label className="block text-sm font-semibold mb-1 dark:text-slate-400">
           Message
         </label>
         <textarea
@@ -369,22 +369,22 @@ export default function RecognitionPage() {
           onChange={handleChange}
           maxLength={150}
           rows="4"
-          className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-400"
+          className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-400 dark:border-slate-600 dark:focus:ring-purple-400 dark:text-slate-100"
           placeholder="Describe the action"
         />
-        <div className="text-xs text-gray-400 text-right mt-1">
+        <div className="text-xs text-gray-400 text-right dark:text-slate-300 mt-1">
           0/150
         </div>
       </div>
 
       {/* Visibility */}
-      <div className="mb-5">
-        <label className="block text-sm font-semibold mb-1">
+      <div className="mb-5 dark:text-slate-400">
+        <label className="block text-sm font-semibold mb-1 dark:text-slate-400">
           Choose who can see the appreciation
         </label>
         <select
           name="visibility"
-          className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-400"
+          className="w-full p-3 dark:bg-slate-900 border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-400 dark:border-slate-600 dark:focus:ring-purple-400 dark:text-slate-100"
         >
           <option value="">Select</option>
           <option value="public">Public</option>
@@ -394,8 +394,8 @@ export default function RecognitionPage() {
       </div>
 
       {/* Approval options */}
-      <div className="space-y-2 text-sm">
-        <label className="flex items-center gap-2">
+      <div className="space-y-2 text-sm dark:text-slate-400">
+        <label className="flex items-center gap-2 dark:text-slate-400">
           <input
             type="radio"
             name="approval"
@@ -405,12 +405,12 @@ export default function RecognitionPage() {
           This post will be sent to admin/manager for approval
         </label>
 
-        <label className="flex items-center gap-2">
+        <label className="flex items-center gap-2 dark:text-slate-400">
           <input type="radio" name="approval" value="notify" />
           Send notification to the recipient
         </label>
 
-        <label className="flex items-center gap-2">
+        <label className="flex items-center gap-2 dark:text-slate-400">
           <input type="radio" name="approval" value="comments" />
           Allow others to comment or add to the appreciation
         </label>
@@ -474,14 +474,14 @@ export default function RecognitionPage() {
                 key={section}
                 onClick={() => setSelectedSection(section)}
                 className={`p-4 rounded-xl cursor-pointer border transition ${selectedSection === section
-                  ? "border-purple-500 bg-white shadow-sm"
-                  : "border-gray-200 bg-gray-50"
+                  ? "border-purple-500 bg-white dark:bg-slate-900 shadow-sm"
+                  : "border-gray-200 dark:border-slate-700 bg-gray-50 dark:bg-slate-900"
                   }`}
               >
                 <h3
                   className={`text-sm font-semibold ${selectedSection === section
-                    ? "text-purple-600"
-                    : "text-gray-900"
+                    ? "text-purple-600 dark:text-purple-400"
+                    : "text-gray-900 dark:text-slate-100"
                     }`}
                 >
                   {section === "recipient"
@@ -491,7 +491,7 @@ export default function RecognitionPage() {
                       : "Appreciation For"}
                 </h3>
 
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-500 dark:text-slate-100 mt-1">
                   {section === "recipient" &&
                     "Who would you like to appreciate? Enter their name or select from colleagues."}
                   {section === "appreciation" &&
@@ -503,16 +503,16 @@ export default function RecognitionPage() {
             ))}
 
             {/* Leaderboard */}
-            <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm">
-              <h3 className="text-sm font-semibold text-gray-900 mb-3">
+            <div className="bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-700 rounded-xl p-4 shadow-sm">
+              <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">
                 Leaderboard
               </h3>
 
               <div className="space-y-2">
                 {users.slice(0, 5).map((user, idx) => {
                   const rowClasses = user.id === JSON.parse(localStorage.getItem('user') || '{}').id
-                    ? "border border-purple-500 bg-purple-50"
-                    : "border border-transparent bg-gray-50 hover:bg-gray-100";
+                    ? "border border-purple-500 bg-purple-50 dark:bg-purple-50"
+                    : "border border-transparent bg-gray-50 hover:bg-gray-100 dark:bg-slate-800 dark:hover:bg-slate-700";
 
                   return (
                     <div
@@ -525,7 +525,7 @@ export default function RecognitionPage() {
                         </div>
 
                         <div
-                          className={`h-9 w-9 flex items-center justify-center rounded-full text-xs font-semibold bg-gray-100 text-gray-800`}
+                          className={`h-9 w-9 flex items-center justify-center rounded-full text-xs font-semibold bg-gray-100 text-gray-800 dark:bg-slate-700 dark:text-slate-200`}
                         >
                           {user.fullname
                             .split(" ")
@@ -537,12 +537,12 @@ export default function RecognitionPage() {
                           <p
                             className={`text-xs font-semibold ${user.id === JSON.parse(localStorage.getItem('user') || '{}').id
                               ? "text-purple-700"
-                              : "text-gray-900"
+                              : "text-gray-900 dark:text-slate-200"
                               }`}
                           >
                             {user.fullname}
                           </p>
-                          <p className="text-[11px] text-gray-500">
+                          <p className="text-[11px] text-gray-500 dark:text-slate-400">
                             {user.points?.toLocaleString() || 0} points
                           </p>
                         </div>
@@ -556,7 +556,7 @@ export default function RecognitionPage() {
                           </span>
                         ) : (
                           <div className="flex items-center gap-2">
-                            <span className="text-[11px] text-gray-500 font-medium">#{idx + 1}</span>
+                            <span className="text-[11px] text-gray-500 dark:text-slate-400 font-medium">#{idx + 1}</span>
                             {isAdmin && (
                               <button onClick={() => grantPoints(user.id)} className="ml-2 text-sm bg-blue-600 text-white px-2 py-1 rounded-md">Grant</button>
                             )}
@@ -586,9 +586,9 @@ export default function RecognitionPage() {
               </div>
 
               {/* 2 — Badges Earned */}
-              <div className="flex items-center justify-between h-24 rounded-2xl px-5 bg-gray-100 text-gray-800 shadow">
+              <div className="flex items-center justify-between h-24 rounded-2xl px-5 bg-linear-to-r from-yellow-500 to-yellow-300 text-white shadow">
                 <div>
-                  <span className="text-sm text-gray-600">Badges Earned</span>
+                  <span className="text-sm opacity-90">Badges Earned</span>
                   <span className="text-2xl font-semibold block">12</span>
                 </div>
                 <div className="w-12 h-12 rounded-xl bg-yellow-300 flex items-center justify-center">
@@ -597,9 +597,9 @@ export default function RecognitionPage() {
               </div>
 
               {/* 3 — Current Rank */}
-              <div className="flex items-center justify-between h-24 rounded-2xl px-5 bg-gray-100 text-gray-800 shadow">
+              <div className="flex items-center justify-between h-24 rounded-2xl px-5 bg-linear-to-r from-green-500 to-green-300 text-white shadow">
                 <div>
-                  <span className="text-sm text-gray-600">Current Rank</span>
+                  <span className="text-sm opacity-90">Current Rank</span>
                   <span className="text-2xl font-semibold block">{(() => {
                     try {
                       const localUser = JSON.parse(localStorage.getItem('user') || '{}');
@@ -616,7 +616,7 @@ export default function RecognitionPage() {
             </div>
 
             {/* FORM CARD */}
-            <div className="bg-gray-100 rounded-2xl p-6 shadow transition-all">
+            <div className="bg-gray-100 dark:bg-slate-900 rounded-2xl p-6 border-gray-200 dark:border-slate-700  shadow transition-all">
               {selectedSection === "recipient" && renderRecipientForm()}
               {selectedSection === "appreciation" && renderAppreciationForm()}
               {selectedSection === "details" && renderDetailsForm()}
@@ -638,7 +638,7 @@ export default function RecognitionPage() {
                     // details step
                     handleSubmit();
                   }}
-                  className="bg-blue-900 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-800 transition"
+                  className="bg-blue-600 text-white px-5 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
                 >
                   {selectedSection === "details" ? "Send Appreciation" : "Next step"}
                 </button>
@@ -647,32 +647,32 @@ export default function RecognitionPage() {
 
 
             {/* RECENT RECOGNITION */}
-            <div className="bg-white rounded-lg p-4 border border-gray-200 shadow-sm">
-              <h3 className="text-lg font-bold text-blue-900 mb-3">
+            <div className="bg-white dark:bg-slate-900 rounded-2xl p-4 border border-gray-200 dark:border-slate-700 shadow-sm">
+              <h3 className="text-lg font-bold text-blue-900 dark:text-blue-600 mb-3">
                 Recent Recognition
               </h3>
 
               <div className="space-y-3">
                 {recognitions.length === 0 ? (
-                  <p className="text-sm text-gray-500">No appreciations yet.</p>
+                  <p className="text-sm text-gray-500 dark:text-slate-400">No appreciations yet.</p>
                 ) : (
                   recognitions.map((a) => (
-                    <div key={a.id} className="border border-gray-200 rounded-lg p-3 shadow-sm">
+                    <div key={a.id} className="border border-gray-200 dark:border-slate-700 rounded-lg p-3 shadow-sm">
                       <div className="flex items-center mb-2">
-                        <div className="w-9 h-9 rounded-full mr-2.5 bg-gray-200 flex items-center justify-center">{a.sender_name?.split(' ').map(n => n[0]).join('')}</div>
+                        <div className="w-9 h-9 rounded-full mr-2.5 bg-gray-200 dark:bg-slate-500 flex items-center justify-center">{a.sender_name?.split(' ').map(n => n[0]).join('')}</div>
                         <div>
-                          <h4 className="text-sm font-semibold text-gray-800">{a.sender_name}</h4>
-                          <span className="text-xs text-gray-500">{new Date(a.created_at).toLocaleString()}</span>
+                          <h4 className="text-sm font-semibold text-gray-800 dark:text-white">{a.sender_name}</h4>
+                          <span className="text-xs text-gray-500 dark:text-slate-400">{new Date(a.created_at).toLocaleString()}</span>
                         </div>
                       </div>
 
-                      <p className="text-sm text-gray-600 mb-2.5">{a.message}</p>
+                      <p className="text-sm text-gray-600 dark:text-white mb-2.5">{a.message}</p>
 
                       <div className="flex items-center gap-3">
                         <button onClick={() => toggleLike(a.id)} className={`px-3 py-1 rounded-md ${a.user_liked ? 'bg-yellow-100 text-yellow-800' : 'bg-gray-100 hover:bg-gray-200'}`}>
                           {a.user_liked ? 'Liked' : 'Like'} • {a.likes_count}
                         </button>
-                        <span className="text-sm text-gray-500">{a.recipient_name}</span>
+                        <span className="text-sm text-gray-500 dark:text-slate-400">{a.recipient_name}</span>
                       </div>
                     </div>
                   ))

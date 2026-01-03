@@ -7,9 +7,10 @@ const { Pool } = pkg;
 // Reuse pool across Lambda invocations to avoid exhausting DB connections
 const pool = global.__pgPool || new Pool({
   connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  }
+  ssl:
+    process.env.NODE_ENV === "production"
+      ? { rejectUnauthorized: false }
+      : false,
 });
 if (!global.__pgPool) global.__pgPool = pool;
 

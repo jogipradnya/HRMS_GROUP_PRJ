@@ -59,16 +59,16 @@ const SettingsPage = () => {
   return (
     <div className="max-w-4xl mx-auto">
       <div className="mb-8 mt-5">
-        <h1 className="text-3xl font-bold text-gray-800">Settings</h1>
-        <p className="text-gray-500 mt-1">Manage your application preferences</p>
+        <h1 className="text-3xl font-bold text-gray-800 dark:text-brand-text">Settings</h1>
+        <p className="text-gray-500 dark:text-brand-primary mt-1">Manage your application preferences</p>
       </div>
 
-      <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+      <div className="bg-white dark:bg-darkbg-card rounded-xl shadow-md border border-gray-200 dark:border-darkbg-border overflow-hidden">
         {settingsItems.map((item, index) => (
           <div
             key={index}
-            className={`flex items-center justify-between px-6 py-4 ${index !== settingsItems.length - 1 ? 'border-b border-gray-100' : ''
-              } ${item.isLogout ? 'hover:bg-red-50 cursor-pointer' : 'hover:bg-gray-50 cursor-pointer'}`}
+            className={`flex items-center justify-between px-6 py-4 ${index !== settingsItems.length - 1 ? 'border-b border-gray-100 dark:border-darkbg-border' : ''
+              } ${item.isLogout ? 'hover:bg-red-50 cursor-pointer' : 'hover:bg-gray-50 dark:hover:bg-darkbg-page cursor-pointer'}`}
             onClick={async (e) => {
               if (item.hasToggle || item.onToggle) return;
               if (item.path) return navigate(item.path);
@@ -81,7 +81,7 @@ const SettingsPage = () => {
               <div className={`p-2 rounded-lg mr-4 ${item.isLogout ? 'bg-red-100 text-red-600' : 'bg-gray-100 text-gray-600'}`}>
                 {item.icon}
               </div>
-              <span className={`font-medium ${item.isLogout ? 'text-red-600' : 'text-gray-700'}`}>
+              <span className={`font-medium ${item.isLogout ? 'text-red-600' : 'text-gray-700 dark:text-brand-text'}`}>
                 {item.label}
               </span>
             </div>

@@ -1,6 +1,3 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
 import { Routes, Route, Navigate } from 'react-router-dom'
@@ -55,8 +52,12 @@ import { initPresence } from './utils/presence';
 
 function App() {
   useEffect(() => {
-    const cleanup = initPresence();
-    return () => cleanup && cleanup();
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   }, []);
 
   return (

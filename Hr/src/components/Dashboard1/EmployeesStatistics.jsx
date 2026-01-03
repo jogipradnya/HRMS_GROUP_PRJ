@@ -23,7 +23,7 @@ export default function HiringStatsChart() {
 
   const fetchData = async () => {
     try {
-      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       const baseUrl = import.meta.env.VITE_API_BASE || 'http://localhost:3000';
       const token = localStorage.getItem('token');
       const res = await axios.get(`${baseUrl}/api/dashboard/stats`, {
@@ -48,12 +48,12 @@ export default function HiringStatsChart() {
         setData(mappedData);
       } else {
         // No data or unexpected shape: initialize zeroed months
-        const zeroData = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map(m => ({ month: m, hires:0, attrition:0, job_applied:0, growth:0 }));
+        const zeroData = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map(m => ({ month: m, hires: 0, attrition: 0, job_applied: 0, growth: 0 }));
         setData(zeroData);
       }
     } catch (err) {
       console.error("Failed to fetch dashboard stats", err);
-      const zeroData = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map(m => ({ month: m, hires:0, attrition:0, job_applied:0, growth:0 }));
+      const zeroData = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].map(m => ({ month: m, hires: 0, attrition: 0, job_applied: 0, growth: 0 }));
       setData(zeroData);
     } finally {
       setLoading(false);
@@ -61,15 +61,15 @@ export default function HiringStatsChart() {
   };
 
   return (
-    <div className="w-full h-[400px] bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+    <div className="w-full h-[400px] bg-white dark:bg-slate-900 p-6 rounded-xl border border-gray-100 dark:border-slate-800 shadow-sm">
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-bold text-gray-900">Monthly Hiring & Resignations</h2>
-          <p className="text-sm text-gray-500">Overview of employee movement and recruitment activity</p>
+          <h2 className="text-lg font-bold text-gray-900 dark:text-slate-100">Monthly Hiring & Resignations</h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Overview of employee movement and recruitment activity</p>
         </div>
         <div className="text-right">
           <div className="text-xs text-gray-500">Resigned (YTD)</div>
-          <div className="text-xl font-bold text-red-600">{data.reduce((s, d) => s + (d.attrition || 0), 0)}</div>
+          <div className="text-xl font-bold text-red-600 dark:text-[#FB923C]">{data.reduce((s, d) => s + (d.attrition || 0), 0)}</div>
         </div>
       </div>
 
