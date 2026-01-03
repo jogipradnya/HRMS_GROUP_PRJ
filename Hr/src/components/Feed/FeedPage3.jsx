@@ -103,9 +103,9 @@ const FeedPage3 = ({ onNavigateBack }) => {
 
     const getEventCategory = (eventDate) => {
         const today = new Date();
-        today.setHours(0,0,0,0);
+        today.setHours(0, 0, 0, 0);
         const eventDateObj = new Date(eventDate);
-        eventDateObj.setHours(0,0,0,0);
+        eventDateObj.setHours(0, 0, 0, 0);
         return eventDateObj >= today ? 'upcoming' : 'past';
     };
 
@@ -216,16 +216,16 @@ const FeedPage3 = ({ onNavigateBack }) => {
     };
 
     return (
-        <div className="p-6 sm:p-10 max-w-[1600px] mx-auto min-h-screen">
+        <div className="p-6 dark:bg-[#0C1014] sm:p-10 max-w-[1600px] mx-auto min-h-screen">
             {/* Header */}
             <div className="flex items-center justify-between mb-10">
                 <div className="flex items-center gap-4">
-                    <button onClick={handleBack} className="text-gray-500 hover:text-gray-700 p-2 rounded-lg" aria-label="Go back">
+                    <button onClick={handleBack} className="text-gray-500 hover:text-gray-700 dark:hover:text-[#88AAFF] p-2 rounded-lg" aria-label="Go back">
                         <ArrowLeft size={20} />
                     </button>
                     <div>
-                        <h1 className="text-3xl font-bold text-[#020839] tracking-tight">Feed & Recognition</h1>
-                        <p className="text-gray-500 mt-1">Celebrate success and stay updated with the team.</p>
+                        <h1 className="text-3xl font-bold text-[#020839] dark:text-white tracking-tight">Feed & Recognition</h1>
+                        <p className="text-gray-500 dark:text-gray-400 mt-1">Celebrate success and stay updated with the team.</p>
                     </div>
                 </div>
                 {isAdmin && (
@@ -243,36 +243,37 @@ const FeedPage3 = ({ onNavigateBack }) => {
                 {/* Main Content */}
                 <div className="xl:col-span-2 space-y-8">
                     {loading ? (
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
-                            <div className="w-10 h-10 border-4 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                            <p className="text-gray-500 font-medium">Loading recognitions...</p>
+                        <div className="bg-white dark:bg-[#1F2429] rounded-xl shadow-sm border border-gray-100 dark:border-[#1F2429] p-12 text-center">
+                            <div className="w-10 h-10 border-4 border-orange-500 dark:border-orange-300 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                            <p className="text-gray-500 dark:text-gray-400 font-medium">Loading recognitions...</p>
                         </div>
                     ) : employeeData ? (
                         <>
                             {/* Employee of the Month Card */}
-                            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 relative overflow-hidden group">
-                                <div className="absolute top-0 left-0 w-full h-2 bg-linear-to-r from-[#020839] to-orange-500"></div>
+                            <div className="bg-white dark:bg-[#1F2429] rounded-xl shadow-sm border border-gray-100 dark:border-[#1F2429] p-8 relative overflow-hidden group">
+
+                                <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#020839] to-orange-500"></div>
 
                                 {/* Header */}
                                 <div className="flex justify-between items-start mb-8 z-10 relative">
                                     <div className="flex items-center gap-3">
-                                        <div className="bg-orange-100 p-2.5 rounded-lg text-orange-600">
+                                        <div className="bg-orange-100 dark:bg-orange-500/20 p-2.5 rounded-lg text-orange-600 dark:text-orange-400">
                                             <Trophy size={24} />
                                         </div>
                                         <div>
-                                            <h2 className="text-lg font-bold text-[#020839]">Employee of the Month</h2>
+                                            <h2 className="text-lg font-bold text-[#AACCFF] dark:text-[#4dabf7]">Employee of the Month</h2>
                                             <p className="text-sm text-gray-400 font-medium uppercase tracking-wider">{employeeData.month}</p>
                                         </div>
                                     </div>
                                     {isAdmin && (
-                                    <button
-                                        onClick={handleDeleteEmployeeOfMonth}
-                                        className="text-gray-400 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition-colors"
-                                        title="Delete Entry"
-                                    >
-                                        <Trash2 size={18} />
-                                    </button>
-                                    )}  
+                                        <button
+                                            onClick={handleDeleteEmployeeOfMonth}
+                                            className="text-gray-400 hover:text-red-500 p-2 rounded-lg hover:bg-red-50 transition-colors"
+                                            title="Delete Entry"
+                                        >
+                                            <Trash2 size={18} />
+                                        </button>
+                                    )}
                                 </div>
 
                                 {/* Featured Employee Content */}
@@ -290,11 +291,11 @@ const FeedPage3 = ({ onNavigateBack }) => {
                                         </div>
                                     </div>
 
-                                    <h3 className="text-2xl font-bold text-[#020839] mb-2">{employeeData.user_name}</h3>
+                                    <h3 className="text-2xl font-bold text-[#AACCFF] dark:text-[#4dabf7] mb-2">{employeeData.user_name}</h3>
 
-                                    <div className="max-w-xl mx-auto mt-4 px-6 py-4 bg-gray-50 rounded-xl border border-gray-100 relative">
+                                    <div className="max-w-xl mx-auto mt-4 px-6 py-4 bg-gray-50 dark:bg-[#0C1014] rounded-xl border border-gray-100 dark:border-gray-700 relative">
                                         <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-gray-50 border-t border-l border-gray-100 transform rotate-45"></div>
-                                        <p className="text-gray-600 leading-relaxed italic">
+                                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed italic">
                                             "{employeeData.description}"
                                         </p>
                                     </div>
@@ -303,23 +304,23 @@ const FeedPage3 = ({ onNavigateBack }) => {
 
                             {/* Team Section */}
                             {employeeData.team && employeeData.team.length > 0 && (
-                                <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+                                <div className="bg-white dark:bg-[#1F2429] rounded-xl shadow-sm border border-gray-100 dark:border-[#1F2429] p-8">
                                     <div className="flex items-center gap-2 mb-6">
-                                        <Users size={20} className="text-[#020839]" />
-                                        <h3 className="text-lg font-bold text-[#020839]">Key Contributors</h3>
+                                        <Users size={20} className="text-[#020839] dark:text-[#4dabf7]" />
+                                        <h3 className="text-lg font-bold text-[#020839] dark:text-white">Key Contributors</h3>
                                     </div>
 
                                     <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
                                         {employeeData.team.map((member) => (
-                                            <div key={member.id} className="relative group bg-gray-50 rounded-xl p-4 border border-gray-100 hover:border-orange-200 transition-colors">
+                                            <div key={member.id} className="relative group bg-gray-50 dark:bg-[#0C1014] rounded-xl p-4 border border-gray-100 dark:border-gray-700 hover:border-[#88AAFF] dark:hover:border-[#88AAFF]/50 transition-colors">
                                                 {isAdmin && (
-                                                <button
-                                                    onClick={() => handleDeleteTeamMember(member.id)}
-                                                    className="absolute top-2 right-2 text-gray-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
-                                                >
-                                                    <X size={14} />
-                                                </button>
-                                                )} 
+                                                    <button
+                                                        onClick={() => handleDeleteTeamMember(member.id)}
+                                                        className="absolute top-2 right-2 text-gray-300 hover:text-red-500 opacity-0 group-hover:opacity-100 transition-opacity"
+                                                    >
+                                                        <X size={14} />
+                                                    </button>
+                                                )}
 
                                                 <div className="flex items-center gap-4">
                                                     <img
@@ -328,8 +329,8 @@ const FeedPage3 = ({ onNavigateBack }) => {
                                                         className="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"
                                                     />
                                                     <div className="min-w-0">
-                                                        <h4 className="font-bold text-[#020839] text-sm truncate">{member.user_name}</h4>
-                                                        <p className="text-orange-600 text-xs font-medium truncate">{member.role}</p>
+                                                        <h4 className="font-bold text-[#020839] dark:text-white text-sm truncate">{member.user_name}</h4>
+                                                        <p className="text-orange-600 dark:text-orange-400 text-xs font-medium truncate group-hover:text-[#88AAFF]">{member.role}</p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -339,12 +340,11 @@ const FeedPage3 = ({ onNavigateBack }) => {
                             )}
                         </>
                     ) : (
-                        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
-                            <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
-                                <Trophy size={32} className="text-gray-300" />
+                        <div className="bg-white dark:bg-[#1F2429] rounded-xl shadow-sm border border-gray-100 dark:border-[#1F2429] p-12 text-center">
+                            <div className="w-20 h-20 bg-gray-50 dark:bg-[#0C1014] rounded-full flex items-center justify-center mx-auto mb-6">
+                                <Trophy size={32} className="text-gray-300 dark:text-gray-600" />
                             </div>
-                            <h3 className="text-xl font-bold text-[#020839] mb-2">No Recognition Yet</h3>
-                            <p className="text-gray-500 mb-8 max-w-sm mx-auto">Start celebrating your team's success by adding the first Employee of the Month.</p>
+                            <h3 className="text-xl font-bold text-[#020839] dark:text-white mb-2">No Recognition Yet</h3>                            <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-sm mx-auto">Start celebrating your team's success by adding the first Employee of the Month.</p>
                             {isAdmin ? (
                                 <button
                                     onClick={handleOpenModal}
@@ -362,13 +362,13 @@ const FeedPage3 = ({ onNavigateBack }) => {
                 {/* Right Sidebar */}
                 <div className="space-y-6">
                     {/* Points Card */}
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                    <div className="bg-white dark:bg-[#1F2429] rounded-xl shadow-sm border border-gray-100 dark:border-[#1F2429] p-6">
                         <div className="flex items-center justify-between mb-2">
                             <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wider">Reward Points</h3>
                             <div className="bg-orange-100 text-orange-700 text-xs font-bold px-2 py-1 rounded-md">NEW</div>
                         </div>
                         <div className="flex items-end gap-2 mb-4">
-                            <span className="text-4xl font-bold text-[#020839]">{userPoints?.toLocaleString() || 0}</span>
+                            <span className="text-4xl font-bold text-[#020839] dark:text-white">{userPoints?.toLocaleString() || 0}</span>
                             <span className="text-sm text-gray-400 font-medium mb-1">pts available</span>
                         </div>
                         <Link to="/redemption" className="w-full block bg-[#020839] text-white py-2.5 rounded-lg text-sm font-semibold hover:bg-opacity-90 transition-all text-center">
@@ -377,10 +377,10 @@ const FeedPage3 = ({ onNavigateBack }) => {
                     </div>
 
                     {/* Upcoming Events (dynamic) */}
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                        <div className="flex items-center gap-2 mb-6 border-b border-gray-100 pb-4">
+                    <div className="bg-white dark:bg-[#1F2429] rounded-xl shadow-sm border border-gray-100 dark:border-[#1F2429] p-6">
+                        <div className="flex items-center gap-2 mb-6 border-b border-gray-100 dark:border-gray-700 pb-4">
                             <Calendar size={18} className="text-orange-500" />
-                            <h3 className="font-bold text-[#020839]">Upcoming Events</h3>
+                            <h3 className="font-bold text-[#020839] dark:text-white">Upcoming Events</h3>
                         </div>
                         <div className="space-y-4">
                             {eventsLoading ? (
@@ -390,18 +390,18 @@ const FeedPage3 = ({ onNavigateBack }) => {
                             ) : (
                                 events
                                     .filter(e => getEventCategory(e.event_date) === 'upcoming')
-                                    .sort((a,b) => new Date(a.event_date) - new Date(b.event_date))
-                                    .slice(0,3)
+                                    .sort((a, b) => new Date(a.event_date) - new Date(b.event_date))
+                                    .slice(0, 3)
                                     .map((ev, idx) => (
                                         <div key={ev.id || idx} className="flex items-start gap-3 group cursor-pointer">
                                             <div className="flex flex-col items-center">
-                                                <div className={`w-2 h-2 rounded-full ${idx===0? 'bg-blue-500' : idx===1 ? 'bg-orange-500' : 'bg-purple-500'} mt-1.5`}></div>
-                                                {idx !== 2 && <div className="w-0.5 h-full bg-gray-100 my-1"></div>}
+                                                <div className={`w-2 h-2 rounded-full ${idx === 0 ? 'bg-blue-500' : idx === 1 ? 'bg-orange-500' : 'bg-purple-500'} mt-1.5`}></div>
+                                                {idx !== 2 && <div className="w-0.5 h-full bg-gray-200 dark:bg-gray-700 my-1"></div>}
                                             </div>
                                             <div className="flex-1 pb-2">
                                                 <div className="flex justify-between items-start mb-1">
-                                                    <p className="text-sm font-semibold text-gray-900 group-hover:text-orange-600 transition-colors">{ev.title}</p>
-                                                    <span className="text-xs font-bold text-gray-400 bg-gray-50 px-1.5 py-0.5 rounded">{`${ev.attendee_count ?? 0} attending`}</span>
+                                                    <p className="text-sm font-semibold text-gray-900 dark:text-white group-hover:text-[#88AAFF] transition-colors">{ev.title}</p>
+                                                    <span className="text-xs font-bold text-gray-400 bg-gray-50 dark:bg-[#0C1014] px-1.5 py-0.5 rounded">{`${ev.attendee_count ?? 0} attending`}</span>
                                                 </div>
                                                 <p className="text-xs text-gray-500 flex items-center gap-1">
                                                     <Clock size={10} />
@@ -412,7 +412,7 @@ const FeedPage3 = ({ onNavigateBack }) => {
                                     ))
                             )}
                         </div>
-                        <Link to="/event" className="w-full mt-4 text-xs font-bold text-gray-400 hover:text-[#020839] flex items-center justify-center gap-1 uppercase tracking-wide transition-colors">
+                        <Link to="/event" className="w-full mt-4 text-xs font-bold text-gray-400 hover:text-[#020839] dark:hover:text-white flex items-center justify-center gap-1 uppercase tracking-wide transition-colors">
                             View Events <ChevronRight size={12} />
                         </Link>
                     </div>
@@ -422,10 +422,10 @@ const FeedPage3 = ({ onNavigateBack }) => {
             {/* Modal */}
             {showModal && (
                 <div className="fixed inset-0 bg-[#020839]/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fadeIn">
-                    <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-100">
+                    <div className="bg-white dark:bg-[#1F2429] rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-100 dark:border-gray-700">
                         <div className="p-8">
                             <div className="flex justify-between items-center mb-6">
-                                <h2 className="text-2xl font-bold text-[#020839]">Add Recognition</h2>
+                                <h2 className="text-2xl font-bold text-[#020839] dark:text-white">Add Recognition</h2>
                                 <button
                                     onClick={handleCloseModal}
                                     className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-50 transition"
@@ -445,7 +445,7 @@ const FeedPage3 = ({ onNavigateBack }) => {
                                                 <select
                                                     value={formData.userId}
                                                     onChange={(e) => setFormData({ ...formData, userId: e.target.value })}
-                                                    className="w-full pl-4 pr-10 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 appearance-none bg-white font-medium text-gray-700 transition-all"
+                                                    className="w-full pl-4 pr-10 py-2.5 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-[#0C1014] text-gray-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88AAFF]/20 focus:border-[#88AAFF] appearance-none font-medium transition-all"
                                                     required
                                                 >
                                                     <option value="">Choose...</option>
@@ -466,7 +466,7 @@ const FeedPage3 = ({ onNavigateBack }) => {
                                                 value={formData.month}
                                                 onChange={(e) => setFormData({ ...formData, month: e.target.value })}
                                                 placeholder="e.g. December 2025"
-                                                className="w-full px-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 font-medium text-gray-700 transition-all"
+                                                className="w-full px-4 py-2.5 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-[#0C1014] text-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 font-medium text-gray-700 transition-all"
                                                 required
                                             />
                                         </div>
@@ -479,7 +479,7 @@ const FeedPage3 = ({ onNavigateBack }) => {
                                         value={formData.description}
                                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                         placeholder="Why does this employee deserve recognition?"
-                                        className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500/20 focus:border-orange-500 min-h-[120px] resize-none transition-all"
+                                        className="w-full px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-[#0C1014] text-gray-700 dark:text-white placeholder-gray-400 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#88AAFF]/20 focus:border-[#88AAFF] min-h-[120px] resize-none transition-all"
                                         required
                                     />
                                 </div>
@@ -499,14 +499,14 @@ const FeedPage3 = ({ onNavigateBack }) => {
 
                                     <div className="space-y-3">
                                         {formData.teamMembers.map((member, index) => (
-                                            <div key={index} className="flex gap-4 items-start bg-gray-50 p-4 rounded-xl border border-gray-100">
+                                            <div key={index} className="flex gap-4 items-start bg-gray-50 dark:bg-gray-700/50 p-4 rounded-xl border border-gray-100 dark:border-gray-600">
                                                 <div className="flex-1 grid grid-cols-2 gap-4">
                                                     <div>
                                                         <label className="block text-xs font-semibold text-gray-500 mb-1">Member</label>
                                                         <select
                                                             value={member.userId}
                                                             onChange={(e) => handleTeamMemberChange(index, 'userId', e.target.value)}
-                                                            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-orange-500 bg-white"
+                                                            className="w-full px-3 py-2 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-[#0C1014] text-gray-700 dark:text-white text-sm focus:outline-none focus:border-orange-500 bg-white"
                                                         >
                                                             <option value="">Select...</option>
                                                             {users.map((user) => (
@@ -520,7 +520,7 @@ const FeedPage3 = ({ onNavigateBack }) => {
                                                             type="text"
                                                             value={member.role}
                                                             onChange={(e) => handleTeamMemberChange(index, 'role', e.target.value)}
-                                                            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:border-orange-500"
+                                                            className="w-full px-3 py-2 border border-gray-200 dark:border-gray-600 rounded-lg bg-white dark:bg-[#0C1014] text-gray-700 dark:text-white text-sm focus:outline-none focus:border-orange-500"
                                                             placeholder="Role in project"
                                                         />
                                                     </div>
