@@ -34,11 +34,14 @@ const MAX_PORT_ATTEMPTS = 10;
 
 const server = http.createServer(app);
 
-// Initialize Socket.io
+// Initialize Socket.io (CORS configured to allow frontend origin and local dev)
+const FRONTEND_ORIGIN = process.env.FRONTEND_ORIGIN || 'http://localhost:5173';
+const corsOrigins = [FRONTEND_ORIGIN, 'http://localhost:5173'].filter((v, i, a) => a.indexOf(v) === i);
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:5173", // Frontend URL
+        origin: corsOrigins,
         methods: ["GET", "POST"],
+        credentials: true,
     },
 });
 // Expose on global so other modules (controllers) can emit events without circular imports

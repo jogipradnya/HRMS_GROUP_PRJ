@@ -13,6 +13,9 @@ This guide walks through deploying the Backend as a persistent web service on Re
    - `JWT_SECRET`
    - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `SMTP_SECURE`, `FROM_EMAIL` (optional)
    - `NODE_ENV=production`
+   - `FRONTEND_ORIGIN` — set to your deployed frontend URL (e.g., `https://hrms11m123.netlify.app`) so the backend will accept connections (CORS + Socket.io).
+
+Note: For local development, FRONTEND_ORIGIN can be `http://localhost:5173` (Vite dev server).
 6. (Optional) Add a Managed Postgres on Render and use its connection string for `DATABASE_URL`.
 7. Deploy and monitor logs in the Render dashboard.
 
