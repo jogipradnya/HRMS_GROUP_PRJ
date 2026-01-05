@@ -186,7 +186,7 @@ const ProfilePage = ({ onEditProfile, userOverride, tasksOverride }) => {
                             const token = localStorage.getItem('token');
                             const uid = user?.id;
                             if (!token || !uid) return alert('Not authenticated');
-                            const res = await fetch(`http://localhost:3000/api/users/${uid}`, {
+                            const res = await fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/users/${uid}`, {
                               method: 'PUT',
                               headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                               body: JSON.stringify({ status: 'Resigned', resignation_reason: reason })

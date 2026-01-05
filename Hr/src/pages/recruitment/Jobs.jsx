@@ -27,7 +27,7 @@ export default function Jobs() {
 
   const fetchJobs = async (opts = {}) => {
     try {
-      const res = await axios.get("http://localhost:3000/api/jobs", { params: opts });
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/jobs`, { params: opts });
       setJobs(res.data);
     } catch (err) {
       console.error(err);
@@ -57,7 +57,7 @@ export default function Jobs() {
 
   const submitJob = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:3000/api/jobs", form);
+    await axios.post(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/jobs`, form);
     setForm({ title: "", location: "", experience: "", salary: "" });
     fetchJobs();
   };
@@ -97,7 +97,7 @@ export default function Jobs() {
     if (resumeFile) fd.append('resume', resumeFile);
 
     try {
-      await axios.post(`http://localhost:3000/api/jobs/${selectedJob.id}/apply`, fd, {
+      await axios.post(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/jobs/${selectedJob.id}/apply`, fd, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
       closeApply();
@@ -118,7 +118,7 @@ export default function Jobs() {
     if (!confirmDelete) return;
 
     try {
-      await axios.delete(`http://localhost:3000/api/jobs/${id}`);
+      await axios.delete(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/jobs/${id}`);
       fetchJobs();
     } catch (err) {
       alert("Failed to delete job");

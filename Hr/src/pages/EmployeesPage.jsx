@@ -59,7 +59,7 @@ function EmployeesPage() {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const res = await fetch("http://localhost:3000/api/users", {
+const res = await fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/users`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -68,7 +68,7 @@ function EmployeesPage() {
         const usersList = data.users || data;
         // fetch tasks summary and merge
         try {
-          const sres = await fetch('http://localhost:3000/api/tasks/summary', { headers: { Authorization: `Bearer ${token}` } });
+          const sres = await fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/tasks/summary`, { headers: { Authorization: `Bearer ${token}` } });
           if (sres.ok) {
             const sjson = await sres.json();
             const arr = sjson.data || [];
@@ -117,7 +117,7 @@ function EmployeesPage() {
 
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:3000/api/users/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/users/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -141,7 +141,7 @@ function EmployeesPage() {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3000/api/users/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/users/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ status: newStatus })
@@ -169,7 +169,7 @@ function EmployeesPage() {
     try {
       const reason = prompt('Reason for resignation (optional):');
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3000/api/users/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/users/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ status: 'Resigned', resignation_reason: reason })
@@ -195,7 +195,7 @@ function EmployeesPage() {
 
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`http://localhost:3000/api/users/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/users/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ status: 'ACTIVE' })
@@ -332,7 +332,7 @@ function EmployeesPage() {
                           <td className="px-6 py-4">
                             <div className="flex items-center gap-4">
                               <img
-                                src={user.profile_picture ? (user.profile_picture.startsWith('http') ? user.profile_picture : `http://localhost:3000${user.profile_picture}`) : "/pexels-olly-927022.jpg"}
+                                src={user.profile_picture ? (user.profile_picture.startsWith('http') ? user.profile_picture : `${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}${user.profile_picture}`) : "/pexels-olly-927022.jpg"}
                                 alt=""
                                 className="w-10 h-10 rounded-full object-cover border border-gray-200 dark:border-slate-700"
                               />

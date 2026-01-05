@@ -17,7 +17,7 @@ const Ecard = () => {
           setLoading(false);
           return;
         }
-        const res = await fetch("http://localhost:3000/api/users", {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/users`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -81,7 +81,7 @@ const Ecard = () => {
 
           <div className="flex flex-col items-center text-center mb-6">
             <div className="w-16 h-16 rounded-full overflow-hidden mb-3 border border-gray-100 dark:border-slate-700">
-              <img src={u.profile_picture ? (u.profile_picture.startsWith('http') ? u.profile_picture : `http://localhost:3000${u.profile_picture}`) : defaultAvatar} alt={u.fullname} className="w-full h-full object-cover" />
+              <img src={u.profile_picture ? (u.profile_picture.startsWith('http') ? u.profile_picture : `${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}${u.profile_picture}`) : defaultAvatar} alt={u.fullname} className="w-full h-full object-cover" />
             </div>
             <h3 className="font-bold text-gray-900 dark:text-slate-100 text-lg">{u.fullname}</h3>
             <p className="text-sm text-gray-500 dark:text-slate-400 font-medium">{u.job_title || u.designation || "-"}</p>

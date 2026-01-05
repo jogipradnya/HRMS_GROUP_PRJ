@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/api/appreciations';
+const API_URL = `${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/appreciations`; 
 
 // Get auth token from localStorage
 const getAuthToken = () => {
@@ -109,7 +109,7 @@ export const deleteComment = async (appreciationId, commentId) => {
 // Get all users (helper for UI)
 export const getAllUsers = async () => {
     try {
-        const response = await axios.get('http://localhost:3000/api/users', createAuthConfig());
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/users`, createAuthConfig());
         return response.data;
     } catch (error) {
         throw error.response?.data || error.message;

@@ -14,14 +14,14 @@ export default function RecognitionPage() {
   const fetchData = async () => {
     try {
       // Fetch Users
-      const userRes = await fetch("http://localhost:3000/api/users", {
+      const userRes = await fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/users`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       });
       const userData = await userRes.json();
       setUsers(userData.users || []);
 
       // Fetch Leaderboard
-      const leaderboardRes = await fetch("http://localhost:3000/api/appreciations/leaderboard", {
+      const leaderboardRes = await fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/appreciations/leaderboard`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       });
       const leaderboardData = await leaderboardRes.json();
@@ -44,7 +44,7 @@ export default function RecognitionPage() {
       }
 
       // Fetch Recent Recognitions
-      const appRes = await fetch("http://localhost:3000/api/appreciations?source=recognition", {
+      const appRes = await fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/appreciations?source=recognition`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
       });
       const appData = await appRes.json();
@@ -124,7 +124,7 @@ export default function RecognitionPage() {
 
       console.log("Submitting payload:", payload);
 
-      const res = await fetch("http://localhost:3000/api/appreciations", {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/appreciations`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

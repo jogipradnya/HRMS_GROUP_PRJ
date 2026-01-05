@@ -15,11 +15,11 @@ export default function Offers() {
 
   const fetchData = async () => {
     try {
-        const appRes = await axios.get("http://localhost:3000/api/applications");
+        const appRes = await axios.get(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/applications`);
         // Only show candidates who are SELECTED
         setCandidates(appRes.data.filter(a => a.status === "SELECTED"));
         
-        const offerRes = await axios.get("http://localhost:3000/api/offers");
+        const offerRes = await axios.get(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/offers`);
         setOffers(offerRes.data);
     } catch(e) { console.log("API Error") }
   };
@@ -36,7 +36,7 @@ export default function Offers() {
       return;
     }
 
-    await axios.post("http://localhost:3000/api/offers", {
+    await axios.post(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/offers`, {
         ...form,
         status: "Pending" 
     }, { headers: { Authorization: token ? `Bearer ${token}` : '' } });

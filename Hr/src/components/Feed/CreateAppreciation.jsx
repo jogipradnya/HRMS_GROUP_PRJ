@@ -32,7 +32,7 @@ const CreateAppreciation = ({ onNavigateBack, onSuccess }) => {
         const fetchUsers = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('http://localhost:3000/api/users', {
+                const response = await axios.get(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/users`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (response.data.success) {

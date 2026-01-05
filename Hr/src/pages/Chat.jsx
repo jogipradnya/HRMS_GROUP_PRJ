@@ -5,7 +5,8 @@ import { Search, MoreVertical, Send, Phone, Video, Info, ArrowLeft, Clock, Check
 import toast, { Toaster } from 'react-hot-toast';
 import { useSearchParams } from 'react-router-dom';
 
-const socket = io.connect("http://localhost:3000");
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:3000';
+const socket = io.connect(API_BASE);
 
 const Chat = () => {
   const [searchParams] = useSearchParams();
@@ -117,7 +118,7 @@ const Chat = () => {
 
         // A. Fetch Recent Chats (Primary List)
         try {
-          const recentRes = await axios.get(`http://localhost:3000/api/chats/${currentUserId}`, config);
+          const recentRes = await axios.get(`${API_BASE}/api/chats/${currentUserId}`, config);
           const recent = recentRes.data.map(user => ({
             id: user.id,
             name: user.name,
@@ -136,7 +137,7 @@ const Chat = () => {
 
         // B. Fetch All Users (Directory for Search)
         try {
-          const usersRes = await axios.get("http://localhost:3000/api/users", config);
+          const usersRes = await axios.get(`${API_BASE}/api/users`, config);
           const all = (usersRes.data.users || [])
             .filter(u => u.id !== currentUserId)
             .map(user => ({
@@ -253,7 +254,7 @@ const Chat = () => {
       try {
         const token = localStorage.getItem('token');
         if (!token) return;
-        const res = await fetch(`http://localhost:3000/api/users/${requestedUserId}`, {
+        const res = await fetch(`${API_BASE}/api/users/${requestedUserId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (!res.ok) return;
@@ -279,7 +280,7 @@ const Chat = () => {
       setRecentChats(prev => prev.map(c => c.id === selectedChat ? { ...c, unread: false } : c));
 
       try {
-        const res = await axios.get(`http://localhost:3000/api/messages/${currentUser.id}/${selectedChat}`);
+        const res = await axios.get(`${API_BASE}/api/messages/${currentUser.id}/${selectedChat}`);
         const history = res.data.map(msg => ({
           id: msg.id,
           text: msg.message,
@@ -494,7 +495,7 @@ const Chat = () => {
   const handleEditMessage = async (msgId, newText, receiverId) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:3000/api/messages/${msgId}`, { message: newText }, { headers: { Authorization: `Bearer ${token}` } });
+      await axios.put(`${API_BASE}/api/messages/${msgId}`, { message: newText }, { headers: { Authorization: `Bearer ${token}` } });
 
       setConversation(prev => prev.map(m => m.id === msgId ? { ...m, text: newText, is_edited: true } : m));
       socket.emit("edit_message", { id: msgId, text: newText, receiverId });
@@ -508,7 +509,7 @@ const Chat = () => {
     if (!window.confirm("Delete this message?")) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:3000/api/messages/${msgId}`, { headers: { Authorization: `Bearer ${token}` } });
+      await axios.delete(`${API_BASE}/api/messages/${msgId}`, { headers: { Authorization: `Bearer ${token}` } });
 
       setConversation(prev => prev.map(m => m.id === msgId ? { ...m, text: "This message was deleted", is_deleted: true } : m));
       socket.emit("delete_message", { id: msgId, receiverId });

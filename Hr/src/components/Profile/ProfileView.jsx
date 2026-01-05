@@ -19,7 +19,7 @@ const ProfileView = () => {
           navigate('/login');
           return;
         }
-        const res = await fetch(`http://localhost:3000/api/users/${id}`, {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/users/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (!res.ok) {
@@ -46,7 +46,7 @@ const ProfileView = () => {
       try {
         const token = localStorage.getItem('token');
         if (!token) return;
-        const res = await fetch(`http://localhost:3000/api/tasks?assignedTo=${id}`, {
+        const res = await fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/tasks?assignedTo=${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (res.ok) {

@@ -38,8 +38,8 @@ export default function MeetingModal({ isOpen, onClose, onMeetingSaved, onMeetin
       const isEditMode = !!meetingToEdit;
       const method = isEditMode ? "PUT" : "POST";
       const url = isEditMode
-        ? `http://localhost:3000/api/meetings/${meetingToEdit.id}`
-        : "http://localhost:3000/api/meetings";
+        ? `${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/meetings/${meetingToEdit.id}`
+        : `${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/meetings`; 
 
       const res = await fetch(url, {
         method: method,
@@ -81,7 +81,7 @@ export default function MeetingModal({ isOpen, onClose, onMeetingSaved, onMeetin
     setLoading(true);
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:3000/api/meetings/${meetingToEdit.id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/meetings/${meetingToEdit.id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });

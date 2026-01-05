@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/api/employee-of-month';
+const API_URL = `${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/employee-of-month`; 
 
 // Get auth token from localStorage
 const getAuthToken = () => {
@@ -91,7 +91,7 @@ export const deleteTeamMember = async (teamMemberId) => {
 export const getAllUsers = async () => {
     try {
         const token = getAuthToken();
-        const response = await axios.get('http://localhost:3000/api/users', {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/users`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

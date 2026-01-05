@@ -50,7 +50,7 @@ export default function MeetingsUI() {
   const fetchMeetings = () => {
     const token = localStorage.getItem("token");
     if (!token) { setMeetings([]); setLoading(false); return; }
-    fetch("http://localhost:3000/api/meetings", { headers: { Authorization: `Bearer ${token}` } })
+    fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/meetings`, { headers: { Authorization: `Bearer ${token}` } })
       .then((res) => res.json())
       .then((data) => setMeetings(Array.isArray(data) ? data : []))
       .catch((err) => console.error(err))
@@ -65,7 +65,7 @@ export default function MeetingsUI() {
     if (!window.confirm("Are you sure?")) return;
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`http://localhost:3000/api/meetings/${id}`, { method: "DELETE", headers: { Authorization: `Bearer ${token}` }});
+      const res = await fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/meetings/${id}`, { method: "DELETE", headers: { Authorization: `Bearer ${token}` }});
       if (res.ok) setMeetings((prev) => prev.filter((m) => m.id !== id));
     } catch (err) { console.error(err); }
   };

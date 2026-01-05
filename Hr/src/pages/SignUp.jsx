@@ -56,7 +56,7 @@ const SignUp = () => {
           try {
             const form = new FormData();
             form.append('profile', profileFile);
-            const upRes = await fetch('http://localhost:3000/api/users/upload-profile', {
+            const upRes = await fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/users/upload-profile`, {
               method: 'POST',
               body: form,
             });
@@ -73,7 +73,7 @@ const SignUp = () => {
           }
         }
 
-        const response = await fetch("http://localhost:3000/api/users/signup", {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/users/signup`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

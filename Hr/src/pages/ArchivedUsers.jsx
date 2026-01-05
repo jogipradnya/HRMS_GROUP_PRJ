@@ -11,7 +11,7 @@ export default function ArchivedUsers() {
       try {
         const token = localStorage.getItem('token');
         if (!token) return;
-        const res = await fetch('http://localhost:3000/api/users/archived', { headers: { Authorization: `Bearer ${token}` } });
+        const res = await fetch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/users/archived`, { headers: { Authorization: `Bearer ${token}` } });
         if (res.ok) {
           const json = await res.json();
           setArchived(json.archived || []);

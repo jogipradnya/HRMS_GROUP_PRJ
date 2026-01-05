@@ -99,7 +99,8 @@ const EditProfilePage = ({ onCancel, onSave }) => {
 
         try {
             // Note: When using FormData, do NOT set Content-Type header manually, let browser set it with boundary
-            const res = await fetch(`http://localhost:3000/api/users/${id}`, {
+            const base = import.meta.env.VITE_API_BASE || 'http://localhost:3000';
+            const res = await fetch(`${base}/api/users/${id}`, {
                 method: 'PUT',
                 headers: {
                     Authorization: `Bearer ${token}`

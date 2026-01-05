@@ -19,14 +19,14 @@ export default function Interviews() {
   // Fetch applications & interviews
   const fetchData = async () => {
     try {
-      const appRes = await axios.get("http://localhost:3000/api/applications");
+      const appRes = await axios.get(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/applications`);
       setApplications(
         appRes.data.filter((a) =>
           ["APPLIED", "INTERVIEW"].includes(a.status)
         )
       );
 
-      const intRes = await axios.get("http://localhost:3000/api/interviews");
+      const intRes = await axios.get(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/interviews`);
       setInterviews(intRes.data);
     } catch (e) {
       console.log("API Error", e);
@@ -55,7 +55,7 @@ export default function Interviews() {
     setError("");
 
     try {
-      await axios.post("http://localhost:3000/api/interviews", {
+      await axios.post(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/interviews`, {
         ...form,
         application_id: Number(form.application_id),
       }, { headers: { Authorization: token ? `Bearer ${token}` : '' } });

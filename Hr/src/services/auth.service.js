@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/api/users";
+const API_URL = `${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/users`; 
 
 export const login = async (email, password) => {
     // eslint-disable-next-line no-useless-catch

@@ -9,7 +9,7 @@ export default function Applications() {
   const fetchApplications = async () => {
     // Mocking response for demo if API fails, otherwise use your API
     try {
-      const res = await axios.get("http://localhost:3000/api/applications");
+      const res = await axios.get(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/applications`);
       setApplications(res.data);
     } catch (e) {
       console.log("API not ready yet");
@@ -22,7 +22,7 @@ export default function Applications() {
 
   const updateStatus = async (id, status) => {
     try {
-      await axios.patch(`http://localhost:3000/api/applications/${id}/status`, { status }, {
+      await axios.patch(`${import.meta.env.VITE_API_BASE || 'http://localhost:3000'}/api/applications/${id}/status`, { status }, {
         headers: { Authorization: token ? `Bearer ${token}` : '' }
       });
       fetchApplications();
