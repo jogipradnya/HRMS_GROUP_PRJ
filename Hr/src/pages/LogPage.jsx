@@ -34,8 +34,8 @@ export default function LogPage() {
         emailError.classList.add("hidden");
       }
 
-      const passwordPattern =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+      // Simplified validation: just check minimum 8 characters to match backend
+      const passwordPattern = /.{8,}/;
 
       if (!passwordPattern.test(passwordInput.value.trim())) {
         passwordError.classList.remove("hidden");
@@ -174,7 +174,7 @@ export default function LogPage() {
                 </span>
               </div>
               <p id="IpasswordError" className="hidden text-red-500 text-xs mt-1">
-                Password must include uppercase, lowercase, number and symbol.
+                Password must be at least 8 characters long.
               </p>
 
               <div className="flex justify-end">
